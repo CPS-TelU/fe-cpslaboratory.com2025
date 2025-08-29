@@ -3,7 +3,7 @@ import MapEmbed from "../ui/Map";
 import React from 'react';
 import { poppins } from "@/styles/font";
 
-// ✅ SVG background baru
+
 const BackgroundSvg = () => (
   <svg
     className="fixed left-0 top-1/2 -translate-y-1/4 w-[40rem] h-[40rem] opacity-10 z-[-9999] blur"
@@ -41,12 +41,12 @@ export default function AboutHero() {
             </h2>
             <p className="mt-4 text-gray-700 leading-relaxed text-justify">
               Selamat datang di lab Cyber Physical System, tempat di mana ide-ide teknologi bertemu dengan praktik!
-              Kami fokus pada praktikum jaringan dan riset di bidang Internet of Things (IoT), Software Development, dan Machine Learning.
+              Kami merupakan salah satu lab di Fakultas Teknik Elektro Telkom University, di bawah kelompok keahlian Jaringan dan Multimedia (ICONS).
             </p>
             <h3 className="mt-8 text-2xl font-bold text-gray-900">Divisi</h3>
-            <div className="mt-4 flex flex-col sm:flex-row gap-4">
+            <div className="mt-4 flex flex-col sm:flex-row gap-4 text-justify">
               <FactCard title="Praktikum" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." /> 
-              <FactCard title="Riset" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." />
+              <FactCard title="Riset" text="Riset kami berfokus pada pengembangan dan pengimplementasioan di bidang IoT, Software, dan Machine Learning." />
             </div>
           </div>
 

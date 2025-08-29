@@ -55,7 +55,7 @@ export default function InteractiveTimeline({text} :timelineProps){
                         </defs>
                     </svg>
                 </div>
-                <div className="absolute bottom-0 left-4 md:left-8 z-10 opacity-50">
+                <div className="absolute bottom-0 left-4 md:left-8 z-0 opacity-50">
                     {lines.map((_, i) => (
                         <span key={i} className="block text-2xl font-light font-serif text-transparent bg-clip-text bg-linear-to-r from-[#ba2025] to-neutral-500/30">{_}</span>
                     ))}
@@ -65,7 +65,7 @@ export default function InteractiveTimeline({text} :timelineProps){
             {/*Tmeline */}
             <div className="max-w-6xl mx-auto">
                 <div className="relative min-h-screen">
-                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-[#ba2025] transform -translate-x-1/2 z-10 rounded-sm"/>
+                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-[#ba2025] transform -translate-x-1/2 z-0 rounded-sm"/>
                     <div className="space-y-24">
                         {TimelineData.map((item, index) => (
                             <div 
@@ -75,7 +75,7 @@ export default function InteractiveTimeline({text} :timelineProps){
                             }`}
                             ref={(el) => {itemRefs.current[index] = el}}
                             >
-                                <div className="absolute left-1/2 transform -translate-x-1/2 z-20">
+                                <div className="absolute left-1/2 transform -translate-x-1/2 translate-y-8 md:translate-y-0 z-20">
                                     <div className={`w-6 h-6 bg-[#ba2025] border-white border-4 shadow-lg transition-all duration-500 rounded-full ${
                                         visibleItems.has(index) ? "scale-100" :"scale-0"
                                     }`}></div>

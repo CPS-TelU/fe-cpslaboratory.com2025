@@ -1,0 +1,6 @@
+
+export const blogData = [
+    {title:"judul 1", imageSrc:"/images/blog.png", description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl sem, mollis in dictum vel, maximus ut mauris. Donec vitae aliquam elit. Suspendisse tortor dolor, tempus non sollicitudin in, laoreet at libero. Morbi porta, augue eget aliquet congue."},
+    {title:"judul 2", imageSrc:"/images/blog.png", description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl sem, mollis in dictum vel, maximus ut mauris. Donec vitae aliquam elit. Suspendisse tortor dolor, tempus non sollicitudin in, laoreet at libero. Morbi porta, augue eget aliquet congue."},
+    {title:"judul 2", imageSrc:"/images/blog.png", description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisl sem, mollis in dictum vel, maximus ut mauris. Donec vitae aliquam elit. Suspendisse tortor dolor, tempus non sollicitudin in, laoreet at libero. Morbi porta, augue eget aliquet congue."},
+]

@@ -16,7 +16,7 @@ export default function Hero() {
                 </svg>
 
             </div>
-            <div className="relative top-4 w-[350px] h-[200px] sm:h-[400px] md:w-[700px] lg:w-[1000px] xl:h-[500px] md:h-[350px] sm:w-[610px] xl:w-[1100px] lg:h-[500px] overflow-hidden mx-auto rounded-xl shadow-lg">
+            <div className="relative top-4 w-[350px] h-[600px] sm:h-[400px] md:w-[700px] lg:w-[1000px] xl:h-[500px] md:h-[350px] sm:w-[610px] xl:w-[1100px] lg:h-[500px] overflow-hidden mx-auto rounded-xl shadow-lg">
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-red-900/80 to-black" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-red-600/30 via-transparent to-red-800/20" />
                 <div className="absolute left-0 top-1/2 -translate-y-1/6">

@@ -36,7 +36,7 @@ export default function AboutHero() {
       <section className="relative w-full max-w-6xl mx-auto  p-6 sm:p-10 overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           <div className="lg:w-1/2 flex flex-col">
-            <h2 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
+            <h2 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-[#ba2025] to-white bg-clip-text text-transparent">
               Hi Cytizen !!
             </h2>
             <p className="mt-4 text-gray-700 leading-relaxed text-justify">

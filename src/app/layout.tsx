@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Navbar";
+import Footer from "@/components/ui/Footer";
 import { METADATA } from "@/components/constants/Metadata";
 
 
@@ -56,9 +57,10 @@ export default function RootLayout({
         <link rel="canonical" href={METADATA.canonical} />
         <meta name="robots" content="index, follow" />
       </head>
-      <body>
+      <body suppressHydrationWarning={true}>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

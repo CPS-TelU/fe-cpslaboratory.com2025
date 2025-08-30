@@ -78,8 +78,7 @@ const Header = () => {
               About Us
             </Link>
             <Link
-              target="_blank"
-              href="https://medium.com/@cpslaboratory2324"
+              href="/blog"
               onClick={(e) => handleNavigationClick("/blog", e)}
               className={`font-medium ${
                 pathname === "/blog"

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { WhatWeDoContent } from "../constants/Card";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
@@ -60,7 +61,11 @@ export default function WhatWeDo(){
                 ))}
             </div>
             <div className="items-center flex justify-center p-4">
-                <Button className="bg-[#ba2025] text-white">Find More</Button>
+                <Link href="/blog">
+                    <Button className="bg-[#ba2025] text-white hover:bg-[#a01a1f] transition-colors duration-300">
+                        Find More
+                    </Button>
+                </Link>
             </div>
             
         </section>

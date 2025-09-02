@@ -6,74 +6,92 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface ArticlePageProps {
-  params: Promise<{
+  params: {
     slug: string;
-  }>;
+  };
 }
 
-interface NewsArticle {
-  source: {
-    id: string | null;
-    name: string;
-  };
-  author: string | null;
+interface ContentTag {
+  id: string;
+  name: string;
+}
+
+interface Content {
+  id: string;
   title: string;
-  description: string | null;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string | null;
+  slug: string;
+  content: string;
+  coverImg: string;
+  authorName: string;
+  tags: ContentTag[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function ArticlePage({ params }: ArticlePageProps) {
-  const [article, setArticle] = useState<NewsArticle | null>(null);
+  const [article, setArticle] = useState<Content | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [slug, setSlug] = useState<string>("");
+  const {slug} = params;
 
   useEffect(() => {
-    const getParams = async () => {
-      const { slug: slugParam } = await params;
-      setSlug(slugParam);
-      
-      // Fetch all articles and find the one matching the slug
+    const fetchArticle = async () => {
       try {
-        const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=e7e2afd160734107ad57c534c49a7241`
-        );
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch articles');
+        const response = await fetch("https://db-cps.vercel.app/api/v1/content/");
+        if (!response.ok) throw new Error("Failed to fetch content");
+
+                 const data = await response.json();
+         console.log("API Response:", data);
+
+         let contentArray: Content[] = [];
+         if (data.content && Array.isArray(data.content)) {
+           contentArray = data.content;
+         } else if (Array.isArray(data)) {
+           contentArray = data;
+         } else if (data.data && Array.isArray(data.data)) {
+           contentArray = data.data;
+         } else if (data.articles && Array.isArray(data.articles)) {
+           contentArray = data.articles;
+         } else if (data.berhasil && Array.isArray(data.berhasil)) {
+           contentArray = data.berhasil;
+         }
+
+         console.log("Content array:", contentArray);
+         console.log("Looking for slug:", slug);
+         console.log("Available slugs:", contentArray.map(item => item.slug));
+
+         // match by slug
+         let foundArticle = contentArray.find((a) => a.slug === slug);
+
+        if (!foundArticle) {
+          console.log("Exact match failed, trying normalized comparison...");
+          // normalize comparison if needed
+          foundArticle = contentArray.find((a) => {
+            const normalizedSlug = a.slug?.toLowerCase().replace(/\s+/g, "-").trim();
+            const normalizedParam = slug.toLowerCase().replace(/\s+/g, "-").trim();
+            console.log(`Comparing: "${normalizedSlug}" vs "${normalizedParam}"`);
+            return normalizedSlug === normalizedParam;
+          });
         }
-        
-        const data = await response.json();
-        const articles = data.articles || [];
-        
-        // Find article by matching slug
-        const foundArticle = articles.find((article: NewsArticle) => {
-          const articleSlug = article.title
-            .toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-')
-            .trim();
-          return articleSlug === slugParam;
-        });
-        
+
         if (foundArticle) {
+          console.log("Found article:", foundArticle);
           setArticle(foundArticle);
         } else {
-          setError('Article not found');
+          console.log("No article found for slug:", slug);
+          setError("Article not found");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load article');
+        setError(err instanceof Error ? err.message : "Failed to load article");
       } finally {
         setLoading(false);
       }
     };
 
-    getParams();
-  }, [params]);
+    fetchArticle();
+      // Fetch all content and find the one matching the slug
+      
+  }, [slug]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -157,16 +175,19 @@ export default function ArticlePage({ params }: ArticlePageProps) {
           {/* Meta */}
           <div className="mb-6">
             <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
-              <span>{formatDate(article.publishedAt)}</span>
+              <span>{formatDate(article.createdAt)}</span>
               <span>•</span>
-              <span>{article.source.name}</span>
-              {article.author && (
-                <>
-                  <span>•</span>
-                  <span>By {article.author}</span>
-                </>
-              )}
+              <span>By {article.authorName}</span>
             </div>
+            {article.tags && article.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {article.tags.map((tag) => (
+                  <span key={tag.id} className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">
+                    {tag.name}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Article Title */}
@@ -176,9 +197,9 @@ export default function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Article Image */}
           <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden mb-12">
-            {article.urlToImage ? (
+            {article.coverImg ? (
               <Image
-                src={article.urlToImage}
+                src={article.coverImg}
                 alt={article.title}
                 fill
                 className="object-cover"
@@ -197,28 +218,16 @@ export default function ArticlePage({ params }: ArticlePageProps) {
       <section className="pb-20 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="prose prose-lg max-w-none">
-            {article.description && (
-              <p className="text-xl text-gray-700 leading-relaxed mb-8">
-                {article.description}
-              </p>
-            )}
-            
             {article.content ? (
               <div className="text-gray-800 leading-relaxed">
-                <p className="mb-6">
-                  {article.content.replace(/\[\+\d+ chars\]$/, '')}
-                </p>
-                <p className="text-sm text-gray-600 italic">
-                  Note: This is a preview of the article. For the full content, please visit the source.
-                </p>
+                <div className="whitespace-pre-wrap">
+                  {article.content}
+                </div>
               </div>
             ) : (
               <div className="text-gray-800 leading-relaxed">
                 <p className="mb-6">
-                  {article.description || "Content preview not available."}
-                </p>
-                <p className="text-sm text-gray-600 italic">
-                  For the full article content, please visit the source.
+                  Content not available.
                 </p>
               </div>
             )}
@@ -229,25 +238,20 @@ export default function ArticlePage({ params }: ArticlePageProps) {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
               <div className="mb-6 md:mb-0">
                 <p className="text-gray-600 text-sm">
-                  Published on {formatDate(article.publishedAt)}
+                  Published on {formatDate(article.createdAt)}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  Source: {article.source.name}
+                  Author: {article.authorName}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  Last updated: {formatDate(article.updatedAt)}
                 </p>
               </div>
               
               <div className="flex space-x-4">
                 <Link
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors font-medium"
-                >
-                  Read Full Article
-                </Link>
-                <Link
                   href="/blog"
-                  className="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors font-medium"
                 >
                   Back to Blog
                 </Link>

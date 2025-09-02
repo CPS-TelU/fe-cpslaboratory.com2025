@@ -7,50 +7,73 @@ import { Button } from "../ui/button";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ScrollBar } from "../ui/scroll-area";
 
-interface NewsArticle {
-  source: {
-    id: string | null;
-    name: string;
-  };
-  author: string | null;
+interface ContentTag {
+  id: string;
+  name: string;
+}
+
+interface Content {
+  id: string;
   title: string;
-  description: string | null;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string | null;
+  slug: string;
+  content: string;
+  coverImg: string;
+  authorName: string;
+  tags: ContentTag[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function DetailBlog() {
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [articles, setArticles] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchContent = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=e7e2afd160734107ad57c534c49a7241`
+          `https://db-cps.vercel.app/api/v1/content/`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        if (data.articles) {
+        console.log("API Response:", data);
+        console.log("Response type:", typeof data);
+        console.log("Response keys:", Object.keys(data));
+        
+        // Handle different possible response structures
+        if (data.data && Array.isArray(data.data)) {
+          console.log("Using data.data:", data.data);
+          setArticles(data.data);
+        } else if (data.content && Array.isArray(data.content)) {
+          console.log("Using data.content:", data.content);
+          setArticles(data.content);
+        } else if (Array.isArray(data)) {
+          console.log("Using data directly:", data);
+          setArticles(data);
+        } else if (data.articles && Array.isArray(data.articles)) {
+          console.log("Using data.articles:", data.articles);
           setArticles(data.articles);
+        } else if (data.berhasil && Array.isArray(data.berhasil)) {
+          console.log("Using data.berhasil:", data.berhasil);
+          setArticles(data.berhasil);
         } else {
-          setError("No articles found.");
+          console.log("No valid content found in response");
+          console.log("Available keys:", Object.keys(data));
+          setError("No content found in API response.");
         }
       } catch (err) {
-        setError("Failed to fetch news. Please try again later.");
-        console.error("Error fetching news:", err);
+        setError("Failed to fetch content. Please try again later.");
+        console.error("Error fetching content:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchNews();
+    fetchContent();
   }, []);
 
   const createSlug = (title: string) => {
@@ -107,7 +130,7 @@ export default function DetailBlog() {
           {featuredArticle && (
             <>
               <Image 
-                src={featuredArticle.urlToImage || "/images/blog.png"} 
+                src={featuredArticle.coverImg || "/images/blog.png"} 
                 width={568} 
                 height={315} 
                 className="object-cover rounded-3xl" 
@@ -116,26 +139,34 @@ export default function DetailBlog() {
               <div className="py-4">
                 <h1 className="font-light text-2xl md:text-4xl">{featuredArticle.title}</h1>
                 <p className="font-light text-lg md:text-xl">
-                  {featuredArticle.description || "No description available."}
+                  {featuredArticle.content ? featuredArticle.content.substring(0, 150) + "..." : "No content available."}
                 </p>
                 <div className="mt-2 text-sm text-gray-600">
-                  {featuredArticle.source.name} - {new Date(featuredArticle.publishedAt).toLocaleDateString()}
+                  {featuredArticle.authorName} - {new Date(featuredArticle.createdAt).toLocaleDateString()}
                 </div>
+                {featuredArticle.tags && featuredArticle.tags.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {featuredArticle.tags.map((tag) => (
+                      <span key={tag.id} className="px-2 py-1 bg-gray-200 text-gray-700 text-xs rounded-full">
+                        {tag.name}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </>
           )}
         </div>
         <div className="flex flex-col gap-2 items-center self-center">
           {otherArticles.map((article, index) => {
-            const slug = createSlug(article.title);
             return (
               <Link
-                href={`/articles/${slug}?url=${encodeURIComponent(article.url)}`}
+                href={`/articles/${article.slug}`}
                 key={index}
                 className="relative group w-[368px] h-[215px] overflow-hidden rounded-3xl"
               >
                 <Image 
-                  src={article.urlToImage || "/images/blog.png"} 
+                  src={article.coverImg || "/images/blog.png"} 
                   alt={article.title} 
                   fill 
                   className="object-cover rounded-3xl" 
@@ -144,11 +175,20 @@ export default function DetailBlog() {
                   <ScrollArea className="h-[200px] group-hover:overflow-y-auto overflow-hidden transition-all duration-300 gap-2">
                     <h3 className="text-lg font-bold text-gray-900 text-center">{article.title}</h3>
                     <p className="text-lg px-4 text-start font-light">
-                      {article.description || "No description available."}
+                      {article.content ? article.content.substring(0, 100) + "..." : "No content available."}
                     </p>
                     <div className="px-4 text-xs text-gray-600 mt-2">
-                      {article.source.name} - {new Date(article.publishedAt).toLocaleDateString()}
+                      {article.authorName} - {new Date(article.createdAt).toLocaleDateString()}
                     </div>
+                    {article.tags && article.tags.length > 0 && (
+                      <div className="px-4 mt-2 flex flex-wrap gap-1">
+                        {article.tags.slice(0, 2).map((tag) => (
+                          <span key={tag.id} className="px-1 py-0.5 bg-gray-200 text-gray-700 text-xs rounded">
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     <ScrollBar orientation="vertical"/>
                   </ScrollArea>
                   <Button className="bg-[#ba2025] hover:bg-[#a01a1f] transition-colors duration-300">See More</Button>

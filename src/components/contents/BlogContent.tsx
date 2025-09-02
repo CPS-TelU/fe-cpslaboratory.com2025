@@ -4,39 +4,57 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface NewsArticle {
-  source: {
-    id: string | null;
-    name: string;
-  };
-  author: string | null;
+interface ContentTag {
+  id: string;
+  name: string;
+}
+
+interface Content {
+  id: string;
   title: string;
-  description: string | null;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string | null;
+  slug: string;
+  content: string;
+  coverImg: string;
+  authorName: string;
+  tags: ContentTag[];
+  createdAt: string;
+  updatedAt: string;
 }
 
 export default function BlogContent() {
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [articles, setArticles] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchNews = async () => {
+    const fetchContent = async () => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=e7e2afd160734107ad57c534c49a7241`
+          `https://db-cps.vercel.app/api/v1/content/`
         );
         
         if (!response.ok) {
-          throw new Error('Failed to fetch news');
+          throw new Error('Failed to fetch content');
         }
         
         const data = await response.json();
-        setArticles(data.articles || []);
+        console.log("Blog API Response:", data);
+        
+        // Handle different possible response structures
+        if (data.data && Array.isArray(data.data)) {
+          setArticles(data.data);
+        } else if (data.content && Array.isArray(data.content)) {
+          setArticles(data.content);
+        } else if (Array.isArray(data)) {
+          setArticles(data);
+        } else if (data.articles && Array.isArray(data.articles)) {
+          setArticles(data.articles);
+        } else if (data.berhasil && Array.isArray(data.berhasil)) {
+          setArticles(data.berhasil);
+        } else {
+          setError("No content found in API response.");
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -44,7 +62,7 @@ export default function BlogContent() {
       }
     };
 
-    fetchNews();
+    fetchContent();
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -200,9 +218,9 @@ export default function BlogContent() {
               {articles.slice(0, 6).map((article, index) => (
                 <article key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                   <div className="relative h-48 bg-gray-200">
-                    {article.urlToImage ? (
+                    {article.coverImg ? (
                       <Image
-                        src={article.urlToImage}
+                        src={article.coverImg}
                         alt={article.title}
                         fill
                         className="object-cover"
@@ -217,30 +235,37 @@ export default function BlogContent() {
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                        {article.source.name}
+                        {article.authorName}
                       </span>
                       <span className="text-xs text-gray-500">
-                        {formatDate(article.publishedAt)}
+                        {formatDate(article.createdAt)}
                       </span>
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
                       {article.title}
                     </h3>
                     <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">
-                      {article.description || "No description available"}
+                      {article.content ? article.content.substring(0, 150) + "..." : "No content available"}
                     </p>
+                    {article.tags && article.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mb-4">
+                        {article.tags.slice(0, 2).map((tag) => (
+                          <span key={tag.id} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                     <div className="flex items-center justify-between">
                       <Link 
-                        href={`/articles/${createSlug(article.title)}`}
+                        href={`/articles/${article.slug}`}
                         className="text-red-600 hover:text-red-700 font-medium text-sm transition-colors duration-200 inline-block"
                       >
                         Read More →
                       </Link>
-                      {article.author && (
-                        <span className="text-xs text-gray-500">
-                          By {article.author}
-                        </span>
-                      )}
+                      <span className="text-xs text-gray-500">
+                        By {article.authorName}
+                      </span>
                     </div>
                   </div>
                 </article>

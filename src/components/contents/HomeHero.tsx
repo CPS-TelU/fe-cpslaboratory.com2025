@@ -6,11 +6,6 @@ export default function Hero() {
 
             {/* Decorative floating elements */}
             <div className="absolute inset-0 z-[-1] overflow-hidden">
-                {/* Floating circles */}
-                <div className="absolute top-20 left-10 w-4 h-4 bg-red-500/20 rounded-full animate-pulse"></div>
-                <div className="absolute top-40 right-20 w-6 h-6 bg-red-600/30 rounded-full animate-pulse delay-1000"></div>
-                <div className="absolute bottom-40 left-20 w-3 h-3 bg-red-400/25 rounded-full animate-pulse delay-500"></div>
-                <div className="absolute bottom-20 right-10 w-5 h-5 bg-red-500/20 rounded-full animate-pulse delay-1500"></div>
                 
                 {/* Floating lines */}
                 <div className="absolute top-32 left-1/4 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-500/30 to-transparent transform rotate-45"></div>
@@ -26,7 +21,7 @@ export default function Hero() {
             </div>
 
             {/* Main hero container - responsive sizing */}
-            <div className="relative w-[95vw] max-w-[1200px] h-[60vh] sm:h-[65vh] md:h-[70vh] lg:h-[75vh] max-h-[600px] overflow-hidden mx-auto rounded-2xl shadow-2xl mt-8">
+            <div className="relative w-[95vw] max-w-[1200px] h-[60vh] sm:h-[65vh] md:h-[70vh] lg:h-[70vh] max-h-[600px] overflow-hidden mx-auto rounded-2xl shadow-2xl mt-8">
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-red-900/80 to-black" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-red-600/30 via-transparent to-red-800/20" />
                 

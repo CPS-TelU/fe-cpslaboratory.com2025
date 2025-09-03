@@ -43,11 +43,16 @@ export default function ArticlePage() {
   const params = useParams< {slug: string}>();
   const slug = params?.slug
   const [error, setError] = useState<string | null>(null);
+  const apiBlog: string | undefined = process.env.NEXT_PUBLIC_API_BLOG
   useEffect(() => {
     if(!slug)return;
     const fetchArticle = async () => {
+      if(!apiBlog){
+        setError("Api is not called");
+        return
+      }
       try {
-        const response = await fetch("https://db-cps.vercel.app/api/v1/content/");
+        const response = await fetch(apiBlog);
         if (!response.ok) throw new Error("Failed to fetch content");
         console.log("data: ", response);
         const data = await response.json();

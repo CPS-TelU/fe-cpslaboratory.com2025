@@ -15,7 +15,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "AKI",
     major: "Teknik Telekomunikasi",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Research",
+    role: "Research",
     instagram: "https://instagram.com/aki",
     linkedin: "https://linkedin.com/in/aki",
     github: "https://github.com/aki",
@@ -25,7 +25,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "BUDI",
     major: "Teknik Informatika",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Development",
+    role: "Development",
     instagram: "https://instagram.com/budi",
     linkedin: "https://linkedin.com/in/budi",
     github: "https://github.com/budi",
@@ -35,7 +35,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "CITRA",
     major: "Sistem Informasi",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Design",
+    role: "Design",
     instagram: "https://instagram.com/citra",
     linkedin: "https://linkedin.com/in/citra",
     github: "https://github.com/citra",
@@ -45,7 +45,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "DANI",
     major: "Teknik Komputer",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Networking",
+    role: "Networking",
     instagram: "https://instagram.com/dani",
     linkedin: "https://linkedin.com/in/dani",
     github: "https://github.com/dani",
@@ -55,7 +55,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "ELSA",
     major: "Teknik Elektro",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Hardware",
+    role: "Hardware",
     instagram: "https://instagram.com/elsa",
     linkedin: "https://linkedin.com/in/elsa",
     github: "https://github.com/elsa",
@@ -65,7 +65,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "FARIS",
     major: "Teknik Mesin",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Automation",
+    role: "Automation",
     instagram: "https://instagram.com/faris",
     linkedin: "https://linkedin.com/in/faris",
     github: "https://github.com/faris",
@@ -75,7 +75,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "GINA",
     major: "Teknik Industri",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Management",
+    role: "Management",
     instagram: "https://instagram.com/gina",
     linkedin: "https://linkedin.com/in/gina",
     github: "https://github.com/gina",
@@ -85,7 +85,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "HADI",
     major: "Teknik Sipil",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Research",
+    role: "Research",
     instagram: "https://instagram.com/hadi",
     linkedin: "https://linkedin.com/in/hadi",
     github: "https://github.com/hadi",
@@ -95,7 +95,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "INDAH",
     major: "Teknik Kimia",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Development",
+    role: "Development",
     instagram: "https://instagram.com/indah",
     linkedin: "https://linkedin.com/in/indah",
     github: "https://github.com/indah",
@@ -105,7 +105,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "JOKO",
     major: "Teknik Mesin",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Design",
+    role: "Design",
     instagram: "https://instagram.com/joko",
     linkedin: "https://linkedin.com/in/joko",
     github: "https://github.com/joko",
@@ -115,7 +115,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "KARTIKA",
     major: "Teknik Elektro",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Management",
+    role: "Management",
     instagram: "https://instagram.com/kartika",
     linkedin: "https://linkedin.com/in/kartika",
     github: "https://github.com/kartika",
@@ -125,7 +125,7 @@ const DUMMY_ASSISTANT_DATA: Assistant[] = [
     kode: "LUKMAN",
     major: "Teknik Lingkungan",
     imageUrl: "/images/halfbodyguy.png",
-    divisi: "Research",
+    role: "Research",
     instagram: "https://instagram.com/lukman",
     linkedin: "https://linkedin.com/in/lukman",
     github: "https://github.com/lukman",
@@ -140,16 +140,38 @@ export default function AssistantCarousel({
   const [assistantData, setAssistantData] = useState<Assistant[]>([]);
   const firstRowRef = useRef<HTMLDivElement>(null);
   const secondRowRef = useRef<HTMLDivElement>(null);
+  const apiAsssistant = process.env.NEXT_PUBLIC_API_ASSISTANT
+  
 
   // === fetch (kept your dummy preview) ===
   useEffect(() => {
-    setAssistantData(DUMMY_ASSISTANT_DATA);
-    setIsLoading(false);
+    const fetchAssistant = async () => {
+      setIsLoading(true)
+      try {
+        const res = await fetch(apiAsssistant as string);
+        const json = await res.json();
+        console.log("data: ", json)
 
-    // real fetch can replace above:
-    // (kept your robust parsing)
-    // (async () => { ... })();
-  }, []); // Empty dependency array - only run once on mount
+        const mapped : Assistant[] = json.Assistant.map((a : any) => ({
+          id:a.id,
+          kode:a.kode,
+          role:a.role,
+          major:a.major,
+          imageUrl:a.imageUrl,
+          instagram:a.instagram,
+          linkedin:a.linkedin,
+          github:a.github
+        }))
+        setAssistantData(mapped)
+      } catch (error) {
+        console.error(error);
+      }finally{
+        setIsLoading(false)
+      }
+    }
+
+    fetchAssistant();
+    }, [apiAsssistant]); // Empty dependency array - only run once on mount
 
   // === utilities ===
   const chunk = <T,>(arr: T[], size: number): T[][] => {

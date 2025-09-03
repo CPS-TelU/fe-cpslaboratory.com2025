@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 interface ArticlePageProps {
   params: {
@@ -28,59 +29,40 @@ interface Content {
   updatedAt: string;
 }
 
-export default function ArticlePage({ params }: ArticlePageProps) {
+function normalizeSlug(str: string) {
+  return str
+    ?.toLowerCase()
+    .trim()
+    .replace(/\s*-\s*/g, "-") // hapus spasi sebelum/sesudah "-"
+    .replace(/\s+/g, "-");    // ubah semua spasi jadi "-"
+}
+export default function ArticlePage() {
   const [article, setArticle] = useState<Content | null>(null);
   const [loading, setLoading] = useState(true);
+  const params = useParams< {slug: string}>();
+  const slug = params?.slug
   const [error, setError] = useState<string | null>(null);
-  const {slug} = params;
-
   useEffect(() => {
+    if(!slug)return;
     const fetchArticle = async () => {
       try {
         const response = await fetch("https://db-cps.vercel.app/api/v1/content/");
         if (!response.ok) throw new Error("Failed to fetch content");
-
-                 const data = await response.json();
-         console.log("API Response:", data);
-
-         let contentArray: Content[] = [];
-         if (data.content && Array.isArray(data.content)) {
-           contentArray = data.content;
-         } else if (Array.isArray(data)) {
-           contentArray = data;
-         } else if (data.data && Array.isArray(data.data)) {
-           contentArray = data.data;
-         } else if (data.articles && Array.isArray(data.articles)) {
-           contentArray = data.articles;
-         } else if (data.berhasil && Array.isArray(data.berhasil)) {
-           contentArray = data.berhasil;
-         }
-
-         console.log("Content array:", contentArray);
-         console.log("Looking for slug:", slug);
-         console.log("Available slugs:", contentArray.map(item => item.slug));
-
-         // match by slug
-         let foundArticle = contentArray.find((a) => a.slug === slug);
-
-        if (!foundArticle) {
-          console.log("Exact match failed, trying normalized comparison...");
-          // normalize comparison if needed
-          foundArticle = contentArray.find((a) => {
-            const normalizedSlug = a.slug?.toLowerCase().replace(/\s+/g, "-").trim();
-            const normalizedParam = slug.toLowerCase().replace(/\s+/g, "-").trim();
-            console.log(`Comparing: "${normalizedSlug}" vs "${normalizedParam}"`);
-            return normalizedSlug === normalizedParam;
-          });
-        }
-
-        if (foundArticle) {
-          console.log("Found article:", foundArticle);
-          setArticle(foundArticle);
-        } else {
-          console.log("No article found for slug:", slug);
-          setError("Article not found");
-        }
+        console.log("data: ", response);
+        const data = await response.json();
+        const arr: Content[] =
+          data.content ??
+          data.data ??
+          data.articles ??
+          (Array.isArray(data) ? data : []);
+        const normalizedSlugUrl = normalizeSlug(slug);
+        const found = arr.find(
+          (a:Content) => normalizeSlug(a.slug) === normalizedSlugUrl
+        );
+        if(!found) throw new Error("Article not found");
+        setArticle(found);
+        
+      
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load article");
       } finally {
@@ -89,7 +71,6 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     };
 
     fetchArticle();
-      // Fetch all content and find the one matching the slug
       
   }, [slug]);
 

@@ -21,6 +21,15 @@ interface Content {
   updatedAt: string;
 }
 
+
+function normalizeSlug(str: string) {
+  return str
+    ?.toLowerCase()
+    .trim()
+    .replace(/\s*-\s*/g, "-") // hapus spasi sebelum/sesudah "-"
+    .replace(/\s+/g, "-");    // ubah semua spasi jadi "-"
+}
+
 export default function BlogContent() {
   const [articles, setArticles] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
@@ -258,7 +267,7 @@ export default function BlogContent() {
                     )}
                     <div className="flex items-center justify-between">
                       <Link 
-                        href={`/articles/${article.slug}`}
+                        href={`/articles/${normalizeSlug(article.slug)}`}
                         className="text-red-600 hover:text-red-700 font-medium text-sm transition-colors duration-200 inline-block"
                       >
                         Read More →

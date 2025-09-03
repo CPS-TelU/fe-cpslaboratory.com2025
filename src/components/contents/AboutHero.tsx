@@ -1,5 +1,6 @@
 "use client"
 import MapEmbed from "../ui/Map";
+import ScrollIndicator from "../ui/ScrollIndicator";
 import React from 'react';
 import { poppins } from "@/styles/font";
 
@@ -29,11 +30,11 @@ const FactCard = ({ title, text }: { title: string; text: string }) => (
 
 export default function AboutHero() {
   return (
-    <div className={`${poppins.className} flex items-center justify-center p-4 sm:p-8`}>
+    <div className={`${poppins.className} flex items-start justify-center pt-20 pb-16 px-4 sm:px-8 relative min-h-screen`}>
 
         <BackgroundSvg />
 
-      <section className="relative w-full max-w-6xl mx-auto  p-6 sm:p-10 overflow-hidden">
+      <section className="relative w-full max-w-6xl mx-auto p-6 sm:p-10 overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           <div className="lg:w-1/2 flex flex-col">
             <h2 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-[#ba2025] to-white bg-clip-text text-transparent">
@@ -55,6 +56,9 @@ export default function AboutHero() {
           </div>
         </div>
       </section>
+      
+      {/* Scroll Indicator */}
+      <ScrollIndicator />
     </div>
   );
 }

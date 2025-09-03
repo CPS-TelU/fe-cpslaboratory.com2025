@@ -1,4 +1,5 @@
 "use client"
+import ScrollIndicator from "../ui/ScrollIndicator";
 
 export default function Hero() {
     return (
@@ -67,6 +68,9 @@ export default function Hero() {
                     </p>
                 </div>
             </div>
+            
+            {/* Scroll Indicator */}
+            <ScrollIndicator />
         </section>
     )
 }

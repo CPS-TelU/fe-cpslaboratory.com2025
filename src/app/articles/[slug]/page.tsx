@@ -38,6 +38,7 @@ function normalizeSlug(str: string) {
 }
 export default function ArticlePage() {
   const [article, setArticle] = useState<Content | null>(null);
+  const [suggestedArticles, setSuggestedArticles] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
   const params = useParams< {slug: string}>();
   const slug = params?.slug
@@ -62,6 +63,12 @@ export default function ArticlePage() {
         if(!found) throw new Error("Article not found");
         setArticle(found);
         
+        // Get suggested articles (exclude current article and take next 3)
+        const otherArticles = arr.filter(
+          (a:Content) => normalizeSlug(a.slug) !== normalizedSlugUrl
+        );
+        setSuggestedArticles(otherArticles.slice(0, 3));
+        
       
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load article");
@@ -80,6 +87,26 @@ export default function ArticlePage() {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const formatRelativeDate = (dateString: string) => {
+    const now = new Date();
+    const articleDate = new Date(dateString);
+    const diffInMs = now.getTime() - articleDate.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    
+    if (diffInDays === 0) {
+      return "Hari ini";
+    } else if (diffInDays === 1) {
+      return "1 Hari yang lalu";
+    } else if (diffInDays < 7) {
+      return `${diffInDays} Hari yang lalu`;
+    } else if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return weeks === 1 ? "1 Minggu yang lalu" : `${weeks} Minggu yang lalu`;
+    } else {
+      return formatDate(dateString);
+    }
   };
 
   if (loading) {
@@ -213,6 +240,54 @@ export default function ArticlePage() {
               </div>
             )}
           </div>
+
+          {/* Suggested Articles Section */}
+          {suggestedArticles.length > 0 && (
+            <div className="mt-20">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#ba2025] mb-8">
+                Our Latest Blog
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {suggestedArticles.map((suggestedArticle, index) => (
+                  <Link
+                    key={suggestedArticle.id}
+                    href={`/articles/${normalizeSlug(suggestedArticle.slug)}`}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      {suggestedArticle.coverImg ? (
+                        <Image
+                          src={suggestedArticle.coverImg}
+                          alt={suggestedArticle.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          unoptimized
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center">
+                          <span className="text-gray-500 text-sm">No Image Available</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6">
+                      <div className="text-sm text-gray-500 mb-2">
+                        {formatRelativeDate(suggestedArticle.createdAt)}
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-[#ba2025] transition-colors">
+                        {suggestedArticle.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                        {suggestedArticle.content 
+                          ? suggestedArticle.content.substring(0, 120) + "..." 
+                          : "Cari tahu lebih lanjut tentang artikel menarik ini dan konten terbaru dari kami!"
+                        }
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Article Footer */}
           <div className="mt-16 pt-8 border-t border-gray-200">

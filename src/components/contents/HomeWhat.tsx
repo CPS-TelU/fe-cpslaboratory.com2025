@@ -11,12 +11,12 @@ export default function WhatWeDo(){
             <div className="inset-0 absolute md:translate-y-1/6 lg:translate-y-1/3 translate-y-1/3 z-[-1]">
                 <svg className="xl:w-[1280px] xl:h-[106px] w-auto h-auto"viewBox="0 0 1280 106" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g filter="url(#filter0_d_6_74)">
-                    <rect x="-210" width="1734" height="31.5013" fill="#7B0E0E"/>
-                    <rect x="-210" y="31.5013" width="1734" height="31.5013" fill="#DBB2B2"/>
-                    <path d="M-210 63.0027L1531.39 63.0027V94.504L-210 94.504L-210 63.0027Z" fill="black"/>
+                    <rect x="-300" width="1734" height="31.5013" fill="#7B0E0E"/>
+                    <rect x="-300" y="31.5013" width="1734" height="31.5013" fill="#DBB2B2"/>
+                    <path d="M-300 63.0027L1531.39 63.0027V94.504L-300 94.504L-300 63.0027Z" fill="black"/>
                     </g>
                     <defs>
-                    <filter id="filter0_d_6_74" x="-215" y="0" width="1751.39" height="105.504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                    <filter id="filter0_d_6_74" x="-305" y="0" width="1751.39" height="105.504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                     <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                     <feOffset dy="6"/>

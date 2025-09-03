@@ -24,6 +24,14 @@ interface Content {
   updatedAt: string;
 }
 
+function normalizeSlug(str: string) {
+  return str
+    ?.toLowerCase()
+    .trim()
+    .replace(/\s*-\s*/g, "-") // hapus spasi sebelum/sesudah "-"
+    .replace(/\s+/g, "-");    // ubah semua spasi jadi "-"
+}
+
 export default function DetailBlog() {
   const [articles, setArticles] = useState<Content[]>([]);
   const [loading, setLoading] = useState(true);
@@ -161,7 +169,7 @@ export default function DetailBlog() {
           {otherArticles.map((article, index) => {
             return (
               <Link
-                href={`/articles/${article.slug}`}
+                href={`/articles/${normalizeSlug(article.slug)}`}
                 key={index}
                 className="relative group w-[368px] h-[215px] overflow-hidden rounded-3xl"
               >

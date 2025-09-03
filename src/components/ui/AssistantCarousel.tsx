@@ -8,7 +8,7 @@ interface AssistantCarouselProps {
   assistants?: Assistant[];
 }
 
-// Move dummy data outside component to avoid recreation
+// Dummy data asisten
 const DUMMY_ASSISTANT_DATA: Assistant[] = [
   {
     id: "1",
@@ -158,20 +158,19 @@ export default function AssistantCarousel({
     return out;
   };
 
-  // Create infinite scrolling rows with duplicated cards
+  // infinite scrolling
   const rows = useMemo(() => {
     if (assistantData.length === 0) return [[], []];
     
-    // Create enough duplicates to fill screen width + extra for seamless loop
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
-    const cardWidth = 256; // w-64 = 16rem = 256px
-    const gap = 32; // gap-8 = 2rem = 32px
+    const cardWidth = 256;
+    const gap = 32;
     const cardsPerScreen = Math.ceil(screenWidth / (cardWidth + gap)) + 2;
     
     const firstRowData = assistantData.slice(0, 6);
     const secondRowData = assistantData.slice(6, 12);
     
-    // Duplicate cards to create infinite effect
+    // Duplikat card untuk infinite effect
     const firstRow = [];
     const secondRow = [];
     
@@ -278,7 +277,7 @@ export default function AssistantCarousel({
           ))}
         </div>
 
-        {/* Red Separator Line with Fade Effect */}
+        {/* Red Separator Line */}
         <div className="w-full h-0.5 relative">
           <div 
             className="absolute inset-0 bg-gradient-to-r from-transparent via-[#CD5C5C] to-transparent"

@@ -20,7 +20,7 @@ interface AssistantCardProps {
 }
 
 export default function AssistantCard({ assistant }: AssistantCardProps) {
-  // Tweak these 3 numbers only
+  // Const buat ellipse
   const CIRCLE_SIZE = 192; // px
   const CIRCLE_RIGHT = -10; // px from right of card
   const CIRCLE_BOTTOM = 1.7; // px from bottom of card
@@ -32,8 +32,6 @@ export default function AssistantCard({ assistant }: AssistantCardProps) {
       className="relative w-full h-64 bg-transparent rounded-2xl overflow-visible"
       style={
         {
-          // CSS variables so every layer lines up exactly
-          // center of circle in the CARD coordinate system
           "--r": `${r}px`,
           "--circle-right": `${CIRCLE_RIGHT}px`,
           "--circle-bottom": `${CIRCLE_BOTTOM}px`,
@@ -42,7 +40,7 @@ export default function AssistantCard({ assistant }: AssistantCardProps) {
         } as React.CSSProperties
       }
     >
-             {/* Info box */}
+      {/* Box info asisten*/}
        <div className="absolute left-4 bottom-4 w-44 z-10">
                  <div className="bg-white rounded-2xl p-1.5" style={{ boxShadow: '0 2px 6px -1px rgba(0, 0, 0, 0.2), 0 1px 1px -1px rgba(0, 0, 0, 0.2)' }}>
           <h3 className="text-sm font-bold mb-0 bg-gradient-to-r from-[#BA2025] to-[#220404] bg-clip-text text-transparent">{assistant.kode}</h3>
@@ -80,7 +78,7 @@ export default function AssistantCard({ assistant }: AssistantCardProps) {
         </div>
       </div>
 
-             {/* Custom ellipse backdrop */}
+      {/* ellipse backdrop */}
        <div
          className="absolute z-[5]"
          style={{
@@ -100,12 +98,10 @@ export default function AssistantCard({ assistant }: AssistantCardProps) {
          />
        </div>
 
-             {/* IMAGE LAYER A — Bottom half (torso down) inside the circle */}
        <div
          className="absolute inset-0 z-20 pointer-events-none"
          style={{
            WebkitMaskImage:
-             // Show ONLY the circle area = black inside circle, transparent outside
              `radial-gradient(circle var(--r) at var(--cx) var(--cy), black var(--r), transparent calc(var(--r) + 1px))`,
            maskImage:
              `radial-gradient(circle var(--r) at var(--cx) var(--cy), black var(--r), transparent calc(var(--r) + 1px))`,
@@ -123,12 +119,10 @@ export default function AssistantCard({ assistant }: AssistantCardProps) {
          </div>
        </div>
 
-       {/* IMAGE LAYER B — Top half (torso up) outside the circle */}
        <div
          className="absolute inset-0 z-30 pointer-events-none"
          style={{
            WebkitMaskImage:
-             // Show everything EXCEPT the circle = transparent inside, black outside
              `radial-gradient(circle var(--r) at var(--cx) var(--cy), transparent calc(var(--r) - 1px), black var(--r))`,
            maskImage:
              `radial-gradient(circle var(--r) at var(--cx) var(--cy), transparent calc(var(--r) - 1px), black var(--r))`,

@@ -7,7 +7,7 @@ export default function ScrollIndicator() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      // Hide indicator after scrolling down 200px
+      // Hide indicator dibawah 200px
       setIsVisible(scrollTop < 200);
     };
 
@@ -26,7 +26,7 @@ export default function ScrollIndicator() {
   };
 
   return (
-    <div className={`absolute bottom-28 left-1/2 transform -translate-x-1/2 z-20 pointer-events-auto transition-all duration-500 ease-in-out ${
+    <div className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20 pointer-events-auto transition-all duration-500 ease-in-out ${
       isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
     }`}>
       <div 

@@ -95,8 +95,9 @@ export default function DetailBlog() {
      if (loading) {
      return (
        <section className="min-h-screen">
-         <div className="text-center p-5 px-24">
-           <h1 className="text-[#ba2025] text-4xl md:text-6xl font-bold mb-12">Our Blog</h1>
+         <div className="text-center p-6 px-24">
+           <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] 
+             text-4xl md:text-6xl font-bold mb-12 leading-relaxed overflow-visible">Our Blog</h1>
          </div>
         <div className="grid grid-cols-1 md:grid-cols-2 px-4 md:px-40 gap-8">
           <div className="flex flex-col animate-pulse">
@@ -130,8 +131,9 @@ export default function DetailBlog() {
 
      return (
      <section className="min-h-screen">
-       <div className="text-center p-5 px-24">
-         <h1 className="text-[#ba2025] text-4xl md:text-6xl font-bold mb-12">Our Blog</h1>
+       <div className="text-center p-6 px-24">
+         <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] 
+             text-4xl md:text-6xl font-bold mb-12 leading-relaxed overflow-visible">Our Blog</h1>
        </div>
       <div className="grid grid-cols-1 md:grid-cols-2 px-4 md:px-40 gap-8">
         <div className="flex flex-col">

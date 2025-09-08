@@ -57,8 +57,8 @@ export default function AboutHero() {
         </div>
       </section>
       
-      {/* Scroll Indicator */}
-      <ScrollIndicator />
+      {/* Scroll Indicator
+      <ScrollIndicator /> */}
     </div>
   );
 }

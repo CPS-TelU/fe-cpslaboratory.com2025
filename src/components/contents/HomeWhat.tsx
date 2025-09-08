@@ -1,35 +1,99 @@
 import Image from "next/image";
 import Link from "next/link";
-import { WhatWeDoContent } from "../constants/Card";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 
 
+
+
+ const WhatWeDoContent = [
+    {
+        title:"Network",
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        imageUrl:"/images/Card1.png",
+        imageAlt:"image"
+    },
+    {
+        title:"Software Development",
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        imageUrl:"/images/Card1.png",
+        imageAlt:"image"
+    },
+    {
+        title:"IoT",
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        imageUrl:"/images/Card1.png",
+        imageAlt:"image"
+    },
+    {
+        title:"Machine Learning",
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        imageUrl:"/images/Card1.png",
+        imageAlt:"image"
+    },
+]
+
+
 export default function WhatWeDo(){
     return (
-        <section className="relative min-h-screen pt-14">
-            <div className="inset-0 absolute md:translate-y-1/6 lg:translate-y-1/3 translate-y-1/3 z-[-1]">
-                <svg className="xl:w-[1280px] xl:h-[106px] w-auto h-auto"viewBox="0 0 1280 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <section className="relative min-h-screen pt-0 md:pt-[-200px] ">
+           <div className="inset-0 absolute md:translate-y-1/4 translate-y-1/3 z-[-999]">
+                <svg
+                    className="w-full h-[80px] md:h-[100px] lg:h-[120px]"
+                    viewBox="0 0 1280 106"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none"
+                >
                     <g filter="url(#filter0_d_6_74)">
-                    <rect x="-300" width="1734" height="31.5013" fill="#7B0E0E"/>
-                    <rect x="-300" y="31.5013" width="1734" height="31.5013" fill="#DBB2B2"/>
-                    <path d="M-300 63.0027L1531.39 63.0027V94.504L-300 94.504L-300 63.0027Z" fill="black"/>
+                    <rect x="-300" width="1734" height="31.5013" fill="#7B0E0E" />
+                    <rect x="-300" y="31.5013" width="1734" height="31.5013" fill="#DBB2B2" />
+                    <path
+                        d="M-300 63.0027L1531.39 63.0027V94.504L-300 94.504L-300 63.0027Z"
+                        fill="black"
+                    />
                     </g>
                     <defs>
-                    <filter id="filter0_d_6_74" x="-305" y="0" width="1751.39" height="105.504" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                    <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                    <feOffset dy="6"/>
-                    <feGaussianBlur stdDeviation="2.5"/>
-                    <feComposite in2="hardAlpha" operator="out"/>
-                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_6_74"/>
-                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_6_74" result="shape"/>
+                    <filter
+                        id="filter0_d_6_74"
+                        x="-305"
+                        y="0"
+                        width="1751.39"
+                        height="105.504"
+                        filterUnits="userSpaceOnUse"
+                        colorInterpolationFilters="sRGB"
+                    >
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                        <feColorMatrix
+                        in="SourceAlpha"
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                        result="hardAlpha"
+                        />
+                        <feOffset dy="6" />
+                        <feGaussianBlur stdDeviation="2.5" />
+                        <feComposite in2="hardAlpha" operator="out" />
+                        <feColorMatrix
+                        type="matrix"
+                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+                        />
+                        <feBlend
+                        mode="normal"
+                        in2="BackgroundImageFix"
+                        result="effect1_dropShadow_6_74"
+                        />
+                        <feBlend
+                        mode="normal"
+                        in="SourceGraphic"
+                        in2="effect1_dropShadow_6_74"
+                        result="shape"
+                        />
                     </filter>
                     </defs>
                 </svg>
-            </div>
-            <div className="flex justify-center items-center gap-2 mb-4 z-10">
+                </div>
+
+            <div className="flex justify-center items-center gap-2 mb-10 z-10 ">
                 <svg
                     className="w-9 h-9 md:w-12 md:h-12"
                     viewBox="0 0 427 424"
@@ -43,7 +107,7 @@ export default function WhatWeDo(){
                                 <path fillRule="evenodd" clipRule="evenodd" d="M310.401 80.6256C329.655 80.6256 345.264 96.3451 345.264 115.736C345.264 135.127 329.655 150.847 310.401 150.847C308.541 150.847 306.715 150.699 304.934 150.416C278.812 157.105 257.198 171.338 248.252 207.531C248.435 208.989 248.53 210.475 248.53 211.983C248.53 231.374 232.921 247.093 213.666 247.093C212.355 247.093 211.061 247.02 209.788 246.878C182.863 253.526 160.564 267.902 151.696 305.566C151.762 306.445 151.796 307.334 151.796 308.23C151.796 327.621 136.187 343.34 116.932 343.34C97.6775 343.34 82.0685 327.621 82.0685 308.23C82.0685 291.717 93.3883 277.866 108.64 274.118C108.621 274.113 108.603 274.107 108.585 274.102C108.628 274.102 108.671 274.101 108.714 274.101C111.35 273.459 114.101 273.119 116.932 273.119C118.084 273.119 119.224 273.176 120.347 273.286C153.004 268.66 175.375 244.773 178.832 213.418C178.813 212.942 178.803 212.464 178.803 211.983C178.803 209.981 178.969 208.019 179.289 206.109C179.29 206.021 179.293 205.933 179.294 205.845C179.302 205.872 179.311 205.9 179.32 205.928C181.732 191.953 192.348 180.814 205.99 177.727C205.607 177.605 205.219 177.484 204.828 177.364C205.976 177.364 207.114 177.34 208.242 177.295C210.01 177.017 211.821 176.873 213.666 176.873C213.771 176.873 213.875 176.874 213.979 176.874C250.676 172.895 275.487 146.256 275.942 110.369C275.805 109.954 276.074 110.795 275.942 110.369C278.507 93.5256 292.958 80.6256 310.401 80.6256ZM116.932 293.744C108.796 293.744 102.201 300.339 102.201 308.475C102.201 316.612 108.796 323.207 116.932 323.207C125.068 323.207 131.663 316.612 131.663 308.475C131.663 300.339 125.068 293.744 116.932 293.744ZM213.666 197.497C205.531 197.497 198.935 204.092 198.935 212.229C198.935 220.365 205.531 226.96 213.666 226.96C221.802 226.96 228.397 220.365 228.397 212.229C228.397 204.092 221.802 197.497 213.666 197.497ZM310.401 101.25C302.265 101.25 295.669 107.846 295.669 115.982C295.669 124.118 302.265 130.713 310.401 130.713C318.536 130.713 325.132 124.118 325.132 115.982C325.132 107.846 318.536 101.25 310.401 101.25Z" fill="#231F20"/>
                         
                     </svg>
-                <h1 className="text-4xl md:text-5xl font-bold ">WHAT WE DO</h1>
+                <h1 className="text-transparent bg-clip-text bg-linear-to-r from-black to-[#ba2025] text-4xl md:text-5xl font-bold mb">WHAT WE DO</h1>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4">
                 {WhatWeDoContent.map((_, i) => (
@@ -60,7 +124,7 @@ export default function WhatWeDo(){
                     </Card>
                 ))}
             </div>
-            <div className="items-center flex justify-center p-4">
+            <div className="items-center flex justify-center p-12">
                 <Link href="/blog">
                     <Button className="bg-[#ba2025] text-white hover:bg-[#a01a1f] transition-colors duration-300">
                         Find More

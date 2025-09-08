@@ -65,6 +65,7 @@ const Navbar = () => {
       ref={menuRef}
       className="font-dmsans bg-white fixed w-full z-20 top-0 start-0 dark:border-gray-600 lg:block lg:hidden max-h-screen overflow-y-auto"
     >
+    
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           href="/"

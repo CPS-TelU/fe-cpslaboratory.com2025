@@ -3,17 +3,17 @@ import ScrollIndicator from "../ui/ScrollIndicator";
 
 export default function Hero() {
     return (
-        <section className="flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 pb-4 relative overflow-hidden">
+        <section className="flex items-center justify-center px-4 px-6 lg:px-8 py-22 pb-4 relative mt-32 md:pt-0  mb-20 md:mb-20">
 
             {/* Decorative floating elements */}
-            <div className="absolute inset-0 z-[-1] overflow-hidden">
+            <div className="absolute inset-0 z-[-999] overflow-hidden">
                 
                 {/* Floating lines */}
                 <div className="absolute top-32 left-1/4 w-16 h-0.5 bg-gradient-to-r from-transparent via-red-500/30 to-transparent transform rotate-45"></div>
                 <div className="absolute bottom-32 right-1/4 w-20 h-0.5 bg-gradient-to-r from-transparent via-red-600/25 to-transparent transform -rotate-45"></div>
                 
                 {/* Grid pattern */}
-                <div className="absolute inset-0 opacity-5">
+                <div className="absolute inset-0 opacity-5 z-[-999]">
                     <div className="w-full h-full" style={{
                         backgroundImage: `radial-gradient(circle at 1px 1px, #BA2025 1px, transparent 0)`,
                         backgroundSize: '50px 50px'
@@ -22,7 +22,7 @@ export default function Hero() {
             </div>
 
             {/* Main hero container - responsive sizing */}
-            <div className="relative w-[95vw] max-w-[1200px] h-[60vh] sm:h-[65vh] md:h-[70vh] lg:h-[70vh] max-h-[600px] overflow-hidden mx-auto rounded-2xl shadow-2xl mt-8">
+            <div className="relative w-[95vw] max-w-[1200px] h-[35vh] md:h-[70vh]  max-h-[600px] overflow-hidden mx-auto rounded-2xl shadow-2xl md:mt-8 mt-[-8rem]">
                 <div className="absolute inset-0 bg-gradient-to-br from-black via-red-900/80 to-black" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-red-600/30 via-transparent to-red-800/20" />
                 
@@ -52,14 +52,21 @@ export default function Hero() {
 
                 {/* Main content */}
                 <div className="relative z-10 text-center flex flex-col justify-center items-center h-full px-4 sm:px-6 md:px-8">
-                    <div className="flex items-start justify-center gap-2 sm:gap-3 mb-4 sm:mb-6 md:mb-8">
-                        <span className="text-white font-extrabold text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl">#</span>
-                        <div className="flex flex-col text-white font-extrabold text-left">
-                            <h1 className="font-extrabold text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-6xl 2xl:text-7xl">CONNECT THE NODE</h1>
-                            <h1 className="font-extrabold text-lg sm:text-xl md:text-2xl lg:text-4xl xl:text-6xl 2xl:text-7xl">CONNECT THE WORLD</h1>
-                        </div>
-                    </div>
+                  <div className="flex items-center justify-center gap-4 mb-4 md:mb-8">
 
+                    <span className="text-white font-extrabold text-[4rem] sm:text-[10rem] md:text-[12rem] lg:text-[14rem] leading-none">
+                        #
+                    </span>
+
+                    <div className="flex flex-col text-white font-extrabold text-left leading-none">
+                        <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
+                        CONNECT THE NODE
+                        </h1>
+                        <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
+                        CONNECT THE WORLD
+                        </h1>
+                    </div>
+                    </div>
                     <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/80 font-medium max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto leading-relaxed">
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -69,8 +76,9 @@ export default function Hero() {
                 </div>
             </div>
             
+            
             {/* Scroll Indicator */}
-            <ScrollIndicator />
+            {/* <ScrollIndicator /> */}
         </section>
     )
 }

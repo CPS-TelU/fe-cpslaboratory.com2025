@@ -7,8 +7,3 @@ export const poppins = Poppins({
   variable: "--font-poppins", // untuk dipakai di Tailwind
 });
 
-export const dmSans = DM_Sans({
-    subsets: ["latin"],
-    weight: ["400", "500", "700"],
-    variable: "--font-dm-sans",
-});

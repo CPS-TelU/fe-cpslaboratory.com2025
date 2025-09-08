@@ -65,6 +65,7 @@ const Navbar = () => {
       ref={menuRef}
       className="font-dmsans bg-white fixed w-full z-20 top-0 start-0 dark:border-gray-600 lg:block lg:hidden max-h-screen overflow-y-auto"
     >
+    
       <div className="flex flex-wrap items-center justify-between mx-auto p-4">
         <Link
           href="/"
@@ -147,8 +148,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                target="_blank"
-                href="https://medium.com/@cpslaboratory2324"
+                href="/blog"
                 onClick={() => handleLinkClick("/blog")}
                 className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100  hover:bg-transparent hover:text-red-700 md:p-0 sm:hover:bg-transparent sm:hover:text-red-700 sm:p-0 sm:dark:hover:text-red-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white ${
                   activePage === "/blog" ? "text-red-700" : ""

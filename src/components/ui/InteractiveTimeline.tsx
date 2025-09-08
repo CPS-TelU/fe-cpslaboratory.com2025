@@ -1,14 +1,61 @@
  "use client"
 import Image from "next/image";
 import { useState , useRef, useEffect} from "react"
-import { TimelineData } from "../constants/Timeline";
 import { Card } from "./card";
 import { Badge } from "./badge";
+import { BinocularsIcon, GraduationCap, Ribbon, UserSearch } from "lucide-react"
 
  type timelineProps = {
     text:string
 }
 
+
+interface TimelineItem {
+    icon:React.ReactNode
+    title:string
+    description:string
+    image:string
+    side:"left" | "right"
+}
+
+
+ const TimelineData : TimelineItem[] = [
+    {
+        icon:<BinocularsIcon className="w-12 h-12"></BinocularsIcon>, 
+        title:"Open Library",
+        description:"An exclusive introduction for all students to explore our state-of-the-art facilities. Discover the exciting projects we're working on and find your place in our world of innovation.",
+        image:"/images/Journey/Openlab2.JPG",
+        side:"left",
+    },
+    {
+        icon:<GraduationCap className="w-12 h-12"></GraduationCap>, 
+        title:"Cyber Academy",
+        description:"An intensive bootcamp empowering students with in-demand skills. We provide hands-on training in critical areas including Linux, IoT, Software Development, Machine Learning, and Networking.",
+        image:"/images/Journey/posterCA.jpg",
+        side:"right",
+    },
+    {
+        icon:<UserSearch className="w-12 h-12"></UserSearch>, 
+        title:"Cyber Recruitment",
+        description:"Our annual search for passionate and talented minds to join our team. Becoming a lab assistant is a unique opportunity to gain practical experience and contribute to cutting-edge projects.",
+        image:"/images/Journey/CR.JPG",
+        side:"left",
+    },
+    {
+        icon:<Ribbon className="w-12 h-12"></Ribbon>, 
+        title:"Community Service",
+        description:"Applying innovation for social good. We implement our research findings to deliver practical, technology-driven solutions that address real challenges and make a tangible impact in the community.",
+        image:"/images/Journey/Pengmas.jpg",
+        side:"right",
+    },
+    // {
+    //     year:"20XX", 
+    //     title:"External Collaboration",
+    //     description:"Partnering for progress. We actively collaborate with industry leaders and external organizations to conduct joint research, tackling complex problems and accelerating the development of pioneering solutions.",
+    //     image:"/images/Card1.png",
+    //     side:"left",
+    // },
+]
 
 export default function InteractiveTimeline({text} :timelineProps){
     const [visibleItems, setVisibleItems] = useState<Set<number>>(new Set());
@@ -90,9 +137,9 @@ export default function InteractiveTimeline({text} :timelineProps){
                                     `}>
                                         <Card className="p-6 bg-white/90 backdrop-blur-sm shadow-xl border-0 hover:shadow-2xl transition-shadow duration-300">
                                             <Badge variant={"secondary"} className="mb-3 text-white bg-[#ba2025]">
-                                                {item.year}
+                                                {item.icon}
                                             </Badge>
-                                            <h3 className="text-2xl font-bold text-gray-900 mg-3">{item.title}</h3>
+                                            <h3 className="text-3xl font-bold text-gray-900 mg-3">{item.title}</h3>
                                             <p className="">{item.description}</p>
                                         </Card>
                                     </div>

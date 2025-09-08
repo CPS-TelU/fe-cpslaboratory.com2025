@@ -28,7 +28,7 @@ import { Button } from "../ui/button";
     {
         title:"Machine Learning",
         description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        imageUrl:"/images/Card1.png",
+        imageUrl:"/images/whatwedo/machine-learning.jpg",
         imageAlt:"image"
     },
 ]
@@ -93,7 +93,8 @@ export default function WhatWeDo(){
                 </svg>
                 </div>
 
-            <div className="flex justify-center items-center gap-2 mb-10 z-10 ">
+            <div className="flex flex-col items-center text-center gap-4 mb-10 z-10">
+                <div className="flex items-center gap-2">
                 <svg
                     className="w-9 h-9 md:w-12 md:h-12"
                     viewBox="0 0 427 424"
@@ -108,24 +109,32 @@ export default function WhatWeDo(){
                         
                     </svg>
                 <h1 className="text-transparent bg-clip-text bg-linear-to-r from-black to-[#ba2025] text-4xl md:text-5xl font-bold mb">WHAT WE DO</h1>
+                </div>
+                <p className="text-gray-600 text-sm md:text-2xl font-semilight">At CPS Lab, we build, develop, and explore at the intersection of:</p>
+                
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4">
                 {WhatWeDoContent.map((_, i) => (
                     <Card key={i} className="border-none">
                         <CardHeader>
-                            <CardTitle className="text-center text-2xl">{_.title}</CardTitle>
+                            <CardTitle className="font-bold text-center text-2xl bg-gradient-to-r from-[#ba2025] to-[#7B0E0E] bg-clip-text text-transparent">{_.title}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="flex flex-col items-center justify-center gap-2">
-                                <p className="text-center">{_.description}</p>
-                                <Image src={_.imageUrl} width={300} height={300} alt={_.imageAlt}/>
+            
+                                <Image 
+                                src={_.imageUrl} 
+                                width={300} 
+                                height={300} 
+                                alt={_.imageAlt}
+                                className="object-contain rounded-4xl"/>
                             </div>
                         </CardContent>
                     </Card>
                 ))}
             </div>
             <div className="items-center flex justify-center p-12">
-                <Link href="/blog">
+                <Link href="/about">
                     <Button className="bg-[#ba2025] text-white hover:bg-[#a01a1f] transition-colors duration-300">
                         Find More
                     </Button>

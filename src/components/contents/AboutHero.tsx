@@ -47,7 +47,7 @@ export default function AboutHero() {
             <h3 className="mt-8 text-2xl font-bold text-gray-900">Divisi</h3>
             <div className="mt-4 flex flex-col sm:flex-row gap-4 text-justify">
               <FactCard title="Praktikum" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor." /> 
-              <FactCard title="Riset" text="Riset kami berfokus pada pengembangan dan pengimplementasioan di bidang IoT, Software, dan Machine Learning." />
+              <FactCard title="Riset" text="Riset kami berfokus pada pengembangan dan pengimplementasioan di bidang Network, IoT, Software dev, dan Machine Learning." />
             </div>
           </div>
 

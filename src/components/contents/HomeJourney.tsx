@@ -13,7 +13,7 @@ export default function HomeJourney() {
     return (
         <section className="md:py-2 py-20">
             <div className="text-center flex items-center justify-center">
-                <h1 className="text-4xl md:text-7xl font-bold text-transparent bg-clip-text bg-linear-to-r from-[#ba2025] to-black leading-[1.2]">Our Journey so Far...</h1>
+                <h1 className="text-4xl md:text-7xl font-bold text-transparent bg-clip-text bg-linear-to-r from-[#ba2025] to-black leading-[1.3]">Our Journey so Far...</h1>
             </div>
             <InteractiveTimeline text={bgtext}/>
         </section>

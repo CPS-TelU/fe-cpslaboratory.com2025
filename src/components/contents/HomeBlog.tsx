@@ -132,8 +132,11 @@ export default function DetailBlog() {
      return (
      <section className="min-h-screen">
        <div className="text-center p-6 px-24">
-         <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] 
-             text-4xl md:text-6xl font-bold mb-12 leading-relaxed overflow-visible">Our Blog</h1>
+         <h1 className="text-transparent bg-clip-text 
+               bg-gradient-to-r from-black via-[#ba2025] to-black
+               text-4xl md:text-6xl font-bold mb-12 leading-relaxed">
+  Our Blog
+</h1>
        </div>
       <div className="grid grid-cols-1 md:grid-cols-2 px-4 md:px-40 gap-8">
         <div className="flex flex-col">
@@ -147,7 +150,7 @@ export default function DetailBlog() {
                 alt={featuredArticle.title}
               />
               <div className="py-4">
-                <h1 className="font-light text-2xl md:text-4xl">{featuredArticle.title}</h1>
+                <h1 className="font-semibold text-2xl md:text-4xl">{featuredArticle.title}</h1>
                 <p className="font-light text-lg md:text-xl">
                   {featuredArticle.content ? featuredArticle.content.substring(0, 150) + "..." : "No content available."}
                 </p>
@@ -173,7 +176,7 @@ export default function DetailBlog() {
               <Link
                 href={`/articles/${normalizeSlug(article.slug)}`}
                 key={index}
-                className="relative group w-[368px] h-[215px] overflow-hidden rounded-3xl"
+                className="relative group w-[368px] h-[215px] overflow-hidden rounded-3xl hover:scale-105 transition-transform duration-300 shadow-lg"
               >
                 <Image 
                   src={article.coverImg || "/images/blog.png"} 
@@ -201,7 +204,7 @@ export default function DetailBlog() {
                     )}
                     <ScrollBar orientation="vertical"/>
                   </ScrollArea>
-                  <Button className="bg-[#ba2025] hover:bg-[#a01a1f] transition-colors duration-300">See More</Button>
+                  <Button className="bg-[#ba2025] hover:bg-[#a01a1f] transition-colors duration-300 mb-4">See More</Button>
                 </div>
               </Link>
             );

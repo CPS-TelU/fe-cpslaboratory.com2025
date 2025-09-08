@@ -88,7 +88,7 @@ const Header = () => {
             >
               Blog
             </Link>
-            <div className="relative" ref={dropdownRef}>
+            {/* <div className="relative" ref={dropdownRef}>
               <span
                 className={`font-medium cursor-pointer ${
                   pathname.startsWith("/activity")
@@ -119,7 +119,7 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-            </div>
+            </div> */}
             {/* <Link
               href="/recruitment"
               onClick={(e) => handleNavigationClick("/recruitment", e)}

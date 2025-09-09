@@ -75,9 +75,9 @@ export default function ContactForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Logika untuk mengirim form (misalnya ke API)
     alert('Form submitted! Check console for data.');
     console.log(formData);
+    setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
   };
 
   return (

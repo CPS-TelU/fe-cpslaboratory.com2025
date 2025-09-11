@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ScrollBar } from "../ui/scroll-area";
+import { Skeleton } from "../ui/skeleton";
 
 interface ContentTag {
   id: string;
@@ -96,12 +97,13 @@ export default function DetailBlog() {
      return (
        <section className="min-h-screen">
          <div className="text-center p-6 px-24">
-           <h1 className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] 
-             text-4xl md:text-6xl font-bold mb-12 leading-relaxed overflow-visible">Our Blog</h1>
+           <div className="flex justify-center">
+             <Skeleton className="h-12 md:h-16 w-[16rem] md:w-[24rem] rounded" />
+           </div>
          </div>
         <div className="grid grid-cols-1 md:grid-cols-2 px-4 md:px-40 gap-8">
           <div className="flex flex-col animate-pulse">
-            <div className="w-[568px] h-[315px] bg-gray-300 rounded-3xl"></div>
+            <div className="w-[750px] h-[315px] bg-gray-300 rounded-3xl"></div>
             <div className="py-4">
               <div className="h-8 bg-gray-300 rounded mb-2"></div>
               <div className="h-4 bg-gray-300 rounded mb-1"></div>
@@ -144,7 +146,7 @@ export default function DetailBlog() {
             <>
               <Image 
                 src={featuredArticle.coverImg || "/images/blog.png"} 
-                width={568} 
+                width={750} 
                 height={315} 
                 className="object-cover rounded-3xl" 
                 alt={featuredArticle.title}

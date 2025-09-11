@@ -3,15 +3,15 @@ import Image from "next/image";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 mt-[50px]">
       <div className="text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+        <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] mb-2">
           HMM...
         </h1>
         <p className="text-lg text-gray-500 mb-8">there seems to be an error</p>
 
         <div className="relative flex items-center justify-center mb-8">
-          <div className="text-[200px] md:text-[250px] font-bold text-red-200 leading-none">
+          <div className="text-[200px] md:text-[250px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] leading-none">
             4
           </div>
           
@@ -27,7 +27,7 @@ export default function NotFound() {
             </div>
           </div>
           
-          <div className="text-[200px] md:text-[250px] font-bold text-red-200 leading-none">
+          <div className="text-[200px] md:text-[250px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-black to-[#ba2025] leading-none">
             4
           </div>
         </div>

@@ -37,9 +37,9 @@ const DivisionCard: React.FC<DivisionCardProps> = ({ id, title, imageSrc, isHove
   return (
     <div
       className={`
-        absolute w-[200px] h-[280px] md:w-[280px] md:h-[300px] 
+        w-[280px] h-[300px] md:absolute md:w-[280px] md:h-[300px] mx-auto md:mx-0 
         bg-white rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col items-center justify-between
-        transition-all duration-500 ease-in-out transform-gpu
+        transition-none md:transition-all md:duration-500 md:ease-in-out md:transform-gpu
         ${getTransformClasses()}
         ${zIndex}
       `}
@@ -47,7 +47,7 @@ const DivisionCard: React.FC<DivisionCardProps> = ({ id, title, imageSrc, isHove
       <h3 className="text-xl md:text-2xl font-bold text-red-600 tracking-wider mt-6">
         © {title}
       </h3>
-      <div className="w-full h-32 md:h-40 bg-gray-100 rounded-lg flex items-center justify-center">
+      <div className="w-full h-40 md:h-40 bg-gray-100 rounded-lg flex items-center justify-center">
 
         <Image
           src={imageSrc}

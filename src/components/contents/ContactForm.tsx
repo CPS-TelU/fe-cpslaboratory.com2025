@@ -1,5 +1,6 @@
 "use client";
 import { poppins } from '@/styles/font';
+import { Send } from 'lucide-react';
 import React, { useState, FormEvent } from 'react';
 
 
@@ -29,7 +30,7 @@ const CustomInput = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className="w-full bg-transparent border-b-2 border-gray-300 focus:border-red-600 focus:outline-none py-2 transition-colors duration-300"
+      className="w-full bg-transparent border-b-2 border-gray-300 focus:border-red-600 focus:outline-none py-2 transition-colors duration-300 placeholder:text-gray-200"
       required
     />
   </div>
@@ -67,37 +68,74 @@ export default function ContactForm() {
     phone: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Logika untuk mengirim form (misalnya ke API)
-    alert('Form submitted! Check console for data.');
-    console.log(formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className={` ${poppins.className} min-h-screen flex items-center justify-center p-4`}>
-      <div className="bg-white w-full max-w-4xl mx-auto rounded-2xl shadow-lg p-8 md:p-12">
+    <div className={` ${poppins.className} min-h-screen flex items-center justify-center p-2`}>
+      <div className="bg-white w-full max-w-5xl mx-auto rounded-2xl shadow-lg p-8 md:p-12 ">
         {/* Header */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-20">
           <h2 className="text-3xl md:text-6xl font-bold text-red-700">
             We'll hear from you
           </h2>
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2 mb-8">
             Share your thoughts and suggestions with us
           </p>
+          
+          {/* Status Messages */}
+          {submitStatus === 'success' && (
+            <div className="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+              Thank you! Your message has been sent successfully.
+            </div>
+          )}
+          {submitStatus === 'error' && (
+            <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+              Sorry, there was an error sending your message. Please try again.
+            </div>
+          )}
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-10">
-          
-          {/* Kolom Kiri: Input Fields */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-4 gap-x-8 gap-y-10 items-stretch mt-12 mb-16"
+        >
+          {/* Kolom Kiri */}
+          <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
             <CustomInput label="First Name" name="firstName" placeholder="John" value={formData.firstName} onChange={handleChange} />
             <CustomInput label="Last Name" name="lastName" placeholder="Doe" value={formData.lastName} onChange={handleChange} />
             <CustomInput label="Email" name="email" type="email" placeholder="john@gmail.com" value={formData.email} onChange={handleChange} />
@@ -105,28 +143,43 @@ export default function ContactForm() {
           </div>
 
           {/* Kolom Kanan: Text Area */}
-          <div className="relative lg:row-span-2">
+          <div className="relative h-full flex flex-col md:col-span-2">
             <label htmlFor="message" className="text-gray-500 text-sm font-semibold">
               Tell Your Ideas and Critiques
             </label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Tell Your Ideas and Critiques"
-              value={formData.message}
-              onChange={handleChange}
-              rows={8}
-              className="w-full h-full mt-1 bg-white border border-gray-200 rounded-xl shadow-md p-4 focus:ring-2 focus:ring-red-500 focus:outline-none transition-shadow"
-              required
-            ></textarea>
-            <button type="submit" aria-label="Send Message" className="absolute bottom-4 right-4 bg-red-600 hover:bg-red-700 text-white rounded-full w-12 h-12 flex items-center justify-center transition-transform transform hover:scale-110">
-              <svg className="w-6 h-6 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-            </button>
+            <div className="relative flex-1">
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Let us know here..."
+                value={formData.message}
+                onChange={handleChange}
+                className="w-full md:h-full h-[200px] mt-1 bg-white border border-gray-200 rounded-xl shadow-md p-4 pr-14 focus:ring-2 focus:ring-red-500 focus:outline-none transition-shadow resize-none placeholder:text-gray-200"
+                required
+              ></textarea>
+              <button
+                type="submit"
+                aria-label="Send Message"
+                disabled={isSubmitting}
+                className={`absolute bottom-4 right-4 rounded-full w-12 h-12 flex items-center justify-center 
+                            transition-transform duration-200 transform ${
+                              isSubmitting
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-red-600 hover:bg-red-700 hover:scale-110 mr-0.5'
+                            }`}
+              >
+                {isSubmitting ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <Send className="w-6 h-6 text-white items-center justify-center mr-0.5" />
+                )}
+              </button>
+            </div>
           </div>
         </form>
 
         {/* Social Icons */}
-        <SocialIcons />
+        {/* <SocialIcons /> */}
       </div>
     </div>
   );

@@ -1,8 +1,9 @@
 "use client"
 import MapEmbed from "../ui/Map";
 import ScrollIndicator from "../ui/ScrollIndicator";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { poppins } from "@/styles/font";
+import { Skeleton } from "../ui/skeleton";
 
 
 const BackgroundSvg = () => (
@@ -29,8 +30,45 @@ const FactCard = ({ title, text }: { title: string; text: string }) => (
 );
 
 export default function AboutHero() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={`${poppins.className} flex items-start justify-center pt-20 pb-8 px-4 sm:px-8 relative min-h-[60vh]`}>
+
+        <BackgroundSvg />
+
+        <section className="relative w-full max-w-6xl mx-auto p-6 sm:p-10 overflow-hidden">
+          <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+            <div className="lg:w-1/2 flex flex-col">
+              <Skeleton className="h-10 sm:h-12 w-64 sm:w-80" />
+              <div className="mt-4 space-y-2">
+                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-4/6" />
+                <Skeleton className="h-4 w-3/6" />
+              </div>
+              <Skeleton className="mt-8 h-6 w-32" />
+              <div className="mt-4 flex flex-col sm:flex-row gap-4">
+                <Skeleton className="h-24 w-full sm:w-[260px] rounded-lg" />
+                <Skeleton className="h-24 w-full sm:w-[260px] rounded-lg" />
+              </div>
+            </div>
+
+            <div className="flex justify-center items-center rounded-xl overflow-hidden shadow-lg h-full">
+              <Skeleton className="w-[300px] h-[170px] md:w-[350px] md:h-[200px] lg:w-[400px] lg:h-[250px] xl:w-[500px] rounded-xl" />
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
   return (
-    <div className={`${poppins.className} flex items-start justify-center pt-20 pb-16 px-4 sm:px-8 relative min-h-screen`}>
+    <div className={`${poppins.className} flex items-start justify-center pt-20 pb-8 px-4 sm:px-8 relative min-h-[60vh]`}>
 
         <BackgroundSvg />
 

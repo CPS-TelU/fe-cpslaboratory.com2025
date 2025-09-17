@@ -144,14 +144,22 @@ export default function DetailBlog() {
         <div className="flex flex-col">
           {featuredArticle && (
             <>
-              <Image 
-                src={featuredArticle.coverImg || "/images/blog.png"} 
-                width={750} 
-                height={315} 
-                className="object-cover rounded-3xl" 
-                alt={featuredArticle.title}
-              />
-              <div className="py-4">
+              <Link
+                href={`/articles/${normalizeSlug(featuredArticle.slug)}`}
+                className="relative group w-fit overflow-hidden rounded-3xl block"
+              >
+                <Image 
+                  src={featuredArticle.coverImg || "/images/blog.png"} 
+                  width={750} 
+                  height={315} 
+                  className="object-cover rounded-3xl" 
+                  alt={featuredArticle.title}
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-3xl bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Button className="bg-[#ba2025] hover:bg-[#a01a1f] transition-colors duration-300">See More</Button>
+                </div>
+              </Link>
+              <Link href={`/articles/${normalizeSlug(featuredArticle.slug)}`} className="py-4 block">
                 <h1 className="font-semibold text-2xl md:text-4xl">{featuredArticle.title}</h1>
                 <p className="font-light text-lg md:text-xl">
                   {featuredArticle.content ? featuredArticle.content.substring(0, 150) + "..." : "No content available."}
@@ -168,7 +176,7 @@ export default function DetailBlog() {
                     ))}
                   </div>
                 )}
-              </div>
+              </Link>
             </>
           )}
         </div>

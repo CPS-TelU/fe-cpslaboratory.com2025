@@ -37,27 +37,27 @@ const CustomInput = ({
 );
 
 // Komponen ikon sosial media
-const SocialIcons = () => (
-  <div className="flex justify-center items-center space-x-6 mt-12">
-    <a href="#" aria-label="Instagram" className="text-gray-500 hover:text-red-600 transition-colors">
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-      </svg>
-    </a>
-    <a href="#" aria-label="LinkedIn" className="text-gray-500 hover:text-red-600 transition-colors">
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-      </svg>
-    </a>
-    <a href="#" aria-label="Medium" className="text-gray-500 hover:text-red-600 transition-colors">
-      <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13.54,12l4.33-6.85a.75.75,0,0,0-.63-1.15H12.75a.77.77,0,0,0-.63.32L8.5,10.6,5.82,4.32A.77.77,0,0,0,5.19,4H1.06a.75.75,0,0,0-.63,1.15L5,12,0,18.85A.75.75,0,0,0,.63,20H4.81a.77.77,0,0,0,.63-.32L9,13.4l2.68,6.28a.77.77,0,0,0,.63.32h6.14a.75.75,0,0,0,.63-1.15Z" />
-      </svg>
-    </a>
-  </div>
-);
+// const SocialIcons = () => (
+//   <div className="flex justify-center items-center space-x-6 mt-12">
+//     <a href="#" aria-label="Instagram" className="text-gray-500 hover:text-red-600 transition-colors">
+//       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+//         <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+//         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+//       </svg>
+//     </a>
+//     <a href="#" aria-label="LinkedIn" className="text-gray-500 hover:text-red-600 transition-colors">
+//       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+//         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+//       </svg>
+//     </a>
+//     <a href="#" aria-label="Medium" className="text-gray-500 hover:text-red-600 transition-colors">
+//       <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+//         <path d="M13.54,12l4.33-6.85a.75.75,0,0,0-.63-1.15H12.75a.77.77,0,0,0-.63.32L8.5,10.6,5.82,4.32A.77.77,0,0,0,5.19,4H1.06a.75.75,0,0,0-.63,1.15L5,12,0,18.85A.75.75,0,0,0,.63,20H4.81a.77.77,0,0,0,.63-.32L9,13.4l2.68,6.28a.77.77,0,0,0,.63.32h6.14a.75.75,0,0,0,.63-1.15Z" />
+//       </svg>
+//     </a>
+//   </div>
+// );
 
 
 export default function ContactForm() {

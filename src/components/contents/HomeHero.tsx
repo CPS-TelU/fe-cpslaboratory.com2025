@@ -1,5 +1,5 @@
 "use client"
-import ScrollIndicator from "../ui/ScrollIndicator";
+
 
 export default function Hero() {
     return (
@@ -68,17 +68,13 @@ export default function Hero() {
                     </div>
                     </div>
                     <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white/80 font-medium max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto leading-relaxed">
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat."
+                        Where practice meets research, fostering collaboration that sparks innovation in telecommunications and cyber-physical systems.
                     </p>
                 </div>
             </div>
             
             
-            {/* Scroll Indicator */}
-            {/* <ScrollIndicator /> */}
+
         </section>
     )
 }

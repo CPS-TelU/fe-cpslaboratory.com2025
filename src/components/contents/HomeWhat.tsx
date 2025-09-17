@@ -10,19 +10,19 @@ import { Button } from "../ui/button";
     {
         title:"Network",
         description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        imageUrl:"/images/Card1.png",
+        imageUrl:"/images/whatwedo/network.jpg",
         imageAlt:"image"
     },
     {
         title:"Software Development",
         description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        imageUrl:"/images/Card1.png",
+        imageUrl:"/images/whatwedo/software.jpg",
         imageAlt:"image"
     },
     {
         title:"IoT",
         description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        imageUrl:"/images/Card1.png",
+        imageUrl:"/images/whatwedo/IoT.webp",
         imageAlt:"image"
     },
     {

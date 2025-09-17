@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
         { error: 'Missing required fields' },
         { status: 400 }
       );
-    }
+    } 
 
     // Load environment 
     console.log('EMAIL_USER:', process.env.EMAIL_USER ? 'Set' : 'Not set');

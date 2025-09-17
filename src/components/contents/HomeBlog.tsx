@@ -155,8 +155,7 @@ export default function DetailBlog() {
                   className="object-cover rounded-3xl" 
                   alt={featuredArticle.title}
                 />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-3xl bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Button className="bg-[#ba2025] hover:bg-[#a01a1f] transition-colors duration-300">See More</Button>
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-3xl ">
                 </div>
               </Link>
               <Link href={`/articles/${normalizeSlug(featuredArticle.slug)}`} className="py-4 block">

@@ -30,6 +30,11 @@ const CustomInput = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      onInput={(e) => {
+      if (name === "phone") {
+        e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, "");
+        }
+      }}  
       className="w-full bg-transparent border-b-2 border-gray-300 focus:border-red-600 focus:outline-none py-2 transition-colors duration-300 placeholder:text-gray-200"
       required
     />

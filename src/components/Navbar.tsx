@@ -51,7 +51,7 @@ const Header = () => {
               className="flex items-center gap-2"
               onClick={(e) => handleNavigationClick("/", e)}
             >
-              <Image src="/logocps.png" alt="logo" width={130} height={50} />
+              <Image src="/images/logocps.png" alt="logo" width={130} height={50} />
             </Link>
           </div>
           <div className="hidden md:flex space-x-8 items-center">

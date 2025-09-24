@@ -11,7 +11,7 @@ export default function Footer() {
             <div className="flex items-center mb-6">
               <div className="mr-8">
                 <Image
-                  src="/logocps.png"
+                  src="/images/logocps.png"
                   alt="CPS Logo"
                   width={200}
                   height={200}

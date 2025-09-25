@@ -22,7 +22,15 @@ jobs:
       NEXT_PUBLIC_API_BLOG: ${{secrets.NEXT_PUBLIC_API_BLOG}}
       NEXT_PUBLIC_API_ASSISTANT: ${{secrets.NEXT_PUBLIC_API_ASSISTANT}}
 
+  
+
+   
     steps:
+    - name: Clean workspace
+      run: rm -rf ${{ github.workspace }}/*
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4

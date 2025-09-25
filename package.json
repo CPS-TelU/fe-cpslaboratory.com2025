@@ -6,6 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start"
+    "test": "echo \"No tests specified\""
+}
+
   },
   "dependencies": {
     "@radix-ui/react-scroll-area": "^1.2.10",

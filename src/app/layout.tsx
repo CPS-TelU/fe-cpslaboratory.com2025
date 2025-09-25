@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { METADATA } from "@/components/constants/Metadata";
+import "./globals.css"
 
 
 

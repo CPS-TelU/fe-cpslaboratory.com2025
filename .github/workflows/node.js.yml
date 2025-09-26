@@ -15,14 +15,6 @@ jobs:
     strategy:
       matrix:
         node-version: [ 22.20.0 ]
-    env:
-      EMAIL_USER: ${{secrets.EMAIL_USER}}
-      EMAIL_APP_PASSWORD: ${{secrets.EMAIL_APP_PASSWORD}}
-      RESEND_API_KEY: ${{secrets.RESEND_API_KEY}}
-      NEXT_PUBLIC_API_BLOG: ${{secrets.NEXT_PUBLIC_API_BLOG}}
-      NEXT_PUBLIC_API_ASSISTANT: ${{secrets.NEXT_PUBLIC_API_ASSISTANT}}
-
-  
 
    
     steps:
@@ -35,3 +27,14 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Create .env file
+      run: |
+        echo "EMAIL_USER=${{ secrets.EMAIL_USER }}" >> .env
+        echo "EMAIL_APP_PASSWORD=${{ secrets.EMAIL_APP_PASSWORD }}" >> .env
+        echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env
+        echo "NEXT_PUBLIC_API_BLOG=${{ secrets.NEXT_PUBLIC_API_BLOG }}" >> .env
+        echo "NEXT_PUBLIC_API_ASSISTANT=${{ secrets.NEXT_PUBLIC_API_ASSISTANT }}" >> .env
+    - name: Restart app with PM2
+      run: |
+        pm2 startOrReload ecosystem.config.js --env production
+        pm2 save

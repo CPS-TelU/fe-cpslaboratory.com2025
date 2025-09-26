@@ -73,7 +73,7 @@ const Navbar = () => {
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <Image
-            src="/logocps.png"
+            src="/images/logocps.png"
             className="h-8 left-6"
             alt="Logo"
             width={110}

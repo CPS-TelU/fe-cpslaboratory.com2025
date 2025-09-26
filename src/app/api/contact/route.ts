@@ -56,15 +56,15 @@ export async function POST(request: NextRequest) {
 
     // Email options
     const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
+      from: email,
+      to: process.env.EMAIL_USER,
       subject: `New Contact Form Submission from ${firstName} ${lastName}`,
       html: emailHtml,
       replyTo: email, //pastikan balas ke sender
     };
 
     await transporter.sendMail(mailOptions);
-
+    
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
       
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
       console.log('Sending thank you email to:', email);
 
       const resendResult = await resend.emails.send({
-        from: 'CPS Laboratory <onboarding@resend.dev>',
+        from: 'CPS Laboratory <onboarding@cpslaboratory.com>',
         to: [email],
         subject: 'Thank you for contacting CPS Laboratory!',
         html: thankYouHtml,
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       console.log('Resend email sent successfully:', resendResult);
     } catch (resendError) {
       console.error('Error sending thank you email via Resend:', resendError);
-    }
+    } 
 
     return NextResponse.json(
       { message: 'Emails sent successfully' },

@@ -22,7 +22,7 @@ interface TimelineItem {
  const TimelineData : TimelineItem[] = [
     {
         icon:<BinocularsIcon className="w-12 h-12"></BinocularsIcon>, 
-        title:"Open Library",
+        title:"Open Laboratory",
         description:"An exclusive introduction for all students to explore our state-of-the-art facilities. Discover the exciting projects we're working on and find your place in our world of innovation.",
         image:"/images/Journey/Openlab2.JPG",
         side:"left",

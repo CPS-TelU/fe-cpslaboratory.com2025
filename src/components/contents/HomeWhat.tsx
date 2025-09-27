@@ -37,61 +37,6 @@ import { Button } from "../ui/button";
 export default function WhatWeDo(){
     return (
         <section className="relative min-h-screen pt-0 md:pt-[-200px] ">
-           <div className="inset-0 absolute md:translate-y-1/4 translate-y-1/3 z-[-999]">
-                <svg
-                    className="w-full h-[80px] md:h-[100px] lg:h-[120px]"
-                    viewBox="0 0 1280 106"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="none"
-                >
-                    <g filter="url(#filter0_d_6_74)">
-                    <rect x="-300" width="1734" height="31.5013" fill="#7B0E0E" />
-                    <rect x="-300" y="31.5013" width="1734" height="31.5013" fill="#DBB2B2" />
-                    <path
-                        d="M-300 63.0027L1531.39 63.0027V94.504L-300 94.504L-300 63.0027Z"
-                        fill="black"
-                    />
-                    </g>
-                    <defs>
-                    <filter
-                        id="filter0_d_6_74"
-                        x="-305"
-                        y="0"
-                        width="1751.39"
-                        height="105.504"
-                        filterUnits="userSpaceOnUse"
-                        colorInterpolationFilters="sRGB"
-                    >
-                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                        <feColorMatrix
-                        in="SourceAlpha"
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                        result="hardAlpha"
-                        />
-                        <feOffset dy="6" />
-                        <feGaussianBlur stdDeviation="2.5" />
-                        <feComposite in2="hardAlpha" operator="out" />
-                        <feColorMatrix
-                        type="matrix"
-                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                        />
-                        <feBlend
-                        mode="normal"
-                        in2="BackgroundImageFix"
-                        result="effect1_dropShadow_6_74"
-                        />
-                        <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect1_dropShadow_6_74"
-                        result="shape"
-                        />
-                    </filter>
-                    </defs>
-                </svg>
-                </div>
 
             <div className="flex flex-col items-center text-center gap-4 mb-10 z-10">
                 <div className="flex items-center gap-2">
@@ -113,9 +58,10 @@ export default function WhatWeDo(){
                 <p className="text-gray-600 text-sm md:text-2xl font-semilight">At CPS Lab, we build, develop, and explore at the intersection of:</p>
                 
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 px-4 gap-4">
                 {WhatWeDoContent.map((_, i) => (
-                    <Card key={i} className="border-none">
+                    <Card key={i} className="border-none relative overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white/90 backdrop-blur-sm hover:bg-white hover:scale-105">
+                     <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#7B0E0E] via-[#ba2025] to-[#DBB2B2] rounded-t-lg"></div>
                         <CardHeader>
                             <CardTitle className="font-bold text-center text-2xl bg-gradient-to-r from-[#ba2025] to-[#7B0E0E] bg-clip-text text-transparent">{_.title}</CardTitle>
                         </CardHeader>

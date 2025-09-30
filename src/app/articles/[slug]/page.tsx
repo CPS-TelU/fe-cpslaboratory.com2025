@@ -230,12 +230,48 @@ export default function ArticlePage() {
       {/* Article Content */}
       <section className="pb-20 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6 prose-strong:text-gray-900 prose-strong:font-semibold prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-gray-700 prose-li:mb-2 prose-blockquote:text-gray-600 prose-blockquote:border-l-4 prose-blockquote:border-red-200 prose-blockquote:pl-6 prose-blockquote:italic prose-h1:text-3xl prose-h1:font-bold prose-h1:text-gray-900 prose-h1:mb-6 prose-h1:mt-8 prose-h2:text-2xl prose-h2:font-bold prose-h2:text-gray-900 prose-h2:mb-4 prose-h2:mt-8 prose-h3:text-xl prose-h3:font-semibold prose-h3:text-gray-900 prose-h3:mb-3 prose-h3:mt-6 prose-h4:text-lg prose-h4:font-semibold prose-h4:text-gray-900 prose-h4:mb-2 prose-h4:mt-4">
             {article.content ? (
-              <div className="text-gray-800 leading-relaxed">
-                <div className="whitespace-pre-wrap">
-                  {article.content}
-                </div>
+              <div className="article-content">
+                <div 
+                  dangerouslySetInnerHTML={{ 
+                    __html: (() => {
+                      const content = article.content.trim();
+                      
+                      if (content.includes('<p>') || content.includes('<div>') || content.includes('<h')) {
+                        return content;
+                      }
+                      
+                      if (content.includes('\n\n') || content.includes('\r\n\r\n')) {
+                        return content
+                          .split(/\n\s*\n|\r\n\s*\r\n/)
+                          .filter(paragraph => paragraph.trim().length > 0)
+                          .map(paragraph => `<p>${paragraph.trim().replace(/\n/g, '<br>')}</p>`)
+                          .join('');
+                      }
+                      
+                      if (content.includes('\n') || content.includes('\r\n')) {
+                        return content
+                          .split(/\n|\r\n/)
+                          .filter(line => line.trim().length > 0)
+                          .map(line => `<p>${line.trim()}</p>`)
+                          .join('');
+                      }
+                      
+                      const sentences = content.split(/(?<=\.)\s+(?=[A-Z])/);
+                      if (sentences.length > 1) {
+                        const paragraphs = [];
+                        for (let i = 0; i < sentences.length; i += 2) {
+                          const paragraphSentences = sentences.slice(i, i + 2);
+                          paragraphs.push(`<p>${paragraphSentences.join(' ')}</p>`);
+                        }
+                        return paragraphs.join('');
+                      }
+                      
+                      return `<p>${content}</p>`;
+                    })()
+                  }}
+                />
               </div>
             ) : (
               <div className="text-gray-800 leading-relaxed">

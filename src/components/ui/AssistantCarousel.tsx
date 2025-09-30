@@ -138,8 +138,10 @@ export default function AssistantCarousel({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [assistantData, setAssistantData] = useState<Assistant[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
   const firstRowRef = useRef<HTMLDivElement>(null);
   const secondRowRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const apiAsssistant = process.env.NEXT_PUBLIC_API_ASSISTANT
   
 
@@ -171,34 +173,39 @@ export default function AssistantCarousel({
     }
 
     fetchAssistant();
-    }, [apiAsssistant]); // Empty dependency array - only run once on mount
+    }, [apiAsssistant]);
 
-  // === utilities ===
   const chunk = <T,>(arr: T[], size: number): T[][] => {
     const out: T[][] = [];
     for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
     return out;
   };
 
-  // infinite scrolling
   const rows = useMemo(() => {
     if (assistantData.length === 0) return [[], []];
     
     const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1920;
     const cardWidth = 256;
     const gap = 32;
-    const cardsPerScreen = Math.ceil(screenWidth / (cardWidth + gap)) + 2;
+    const cardsPerScreen = Math.ceil(screenWidth / (cardWidth + gap)) + 4; 
     
     const firstRowData = assistantData.slice(0, 6);
     const secondRowData = assistantData.slice(6, 12);
-    
-    // Duplikat card untuk infinite effect
+  
     const firstRow = [];
     const secondRow = [];
     
+    for (let i = 0; i < 2; i++) {
+      firstRow.push(...firstRowData.map(card => ({ ...card, id: `${card.id}-left-${i}` })));
+      secondRow.push(...secondRowData.map(card => ({ ...card, id: `${card.id}-left-${i}` })));
+    }
+    
+    firstRow.push(...firstRowData);
+    secondRow.push(...secondRowData);
+    
     for (let i = 0; i < cardsPerScreen; i++) {
-      firstRow.push(...firstRowData.map(card => ({ ...card, id: `${card.id}-${i}` })));
-      secondRow.push(...secondRowData.map(card => ({ ...card, id: `${card.id}-${i}` })));
+      firstRow.push(...firstRowData.map(card => ({ ...card, id: `${card.id}-right-${i}` })));
+      secondRow.push(...secondRowData.map(card => ({ ...card, id: `${card.id}-right-${i}` })));
     }
     
     return [firstRow, secondRow];
@@ -208,7 +215,85 @@ export default function AssistantCarousel({
 
   const hasMoreCards = assistantData.length > 12;
 
-  // === loading ===
+  const handleWheel = (e: WheelEvent) => {
+    if (!isHovered) return;
+    
+    e.preventDefault();
+    
+    const scrollAmount = e.deltaY;
+    const scrollSpeed = 2;
+
+    if (firstRowRef.current) {
+      firstRowRef.current.scrollLeft += scrollAmount * scrollSpeed;
+    }
+    if (secondRowRef.current) {
+      secondRowRef.current.scrollLeft += scrollAmount * scrollSpeed;
+    }
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    if (isHovered) {
+      container.addEventListener('wheel', handleWheel, { passive: false });
+    } else {
+      container.removeEventListener('wheel', handleWheel);
+    }
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, [isHovered]);
+
+  useEffect(() => {
+    const firstRow = firstRowRef.current;
+    const secondRow = secondRowRef.current;
+    
+    if (!firstRow || !secondRow || assistantData.length === 0) return;
+    
+    const cardWidth = 256 + 32;
+    const originalDataWidth = 6 * cardWidth;
+    const leftPaddingWidth = 2 * originalDataWidth;
+    
+    firstRow.scrollLeft = leftPaddingWidth;
+    secondRow.scrollLeft = leftPaddingWidth;
+  }, [assistantData]);
+
+  useEffect(() => {
+    const firstRow = firstRowRef.current;
+    const secondRow = secondRowRef.current;
+    
+    if (!firstRow || !secondRow || assistantData.length === 0) return;
+
+    const handleScroll = (element: HTMLDivElement, isFirstRow: boolean) => {
+      const { scrollLeft, scrollWidth, clientWidth } = element;
+      const cardWidth = 256 + 32;
+      const originalDataLength = 6; 
+      const originalDataWidth = originalDataLength * cardWidth;
+      const leftPaddingWidth = 2 * originalDataWidth; 
+
+      if (scrollLeft >= leftPaddingWidth + originalDataWidth) {
+        element.scrollLeft = scrollLeft - originalDataWidth;
+      }
+      else if (scrollLeft < leftPaddingWidth) {
+        element.scrollLeft = scrollLeft + originalDataWidth;
+      }
+    };
+
+    const firstRowScrollHandler = () => handleScroll(firstRow, true);
+    const secondRowScrollHandler = () => handleScroll(secondRow, false);
+
+    firstRow.addEventListener('scroll', firstRowScrollHandler);
+    secondRow.addEventListener('scroll', secondRowScrollHandler);
+
+    return () => {
+      firstRow.removeEventListener('scroll', firstRowScrollHandler);
+      secondRow.removeEventListener('scroll', secondRowScrollHandler);
+    };
+  }, [assistantData]);
+
+  // === loading state ===
   if (isLoading) {
     return (
       <section className="py-16 bg-transparent">
@@ -282,15 +367,23 @@ export default function AssistantCarousel({
         </h2>
       </div>
 
-      <div className="space-y-8">
+      <div 
+        ref={containerRef}
+        className="space-y-8"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{ 
+          height: 'fit-content',
+          maxHeight: '100%',
+          overflow: 'hidden',
+          width: '100vw',
+          marginLeft: 'calc(-50vw + 50%)'
+        }}
+      >
         {/* First Row - Infinite Belt */}
         <div 
           ref={firstRowRef}
           className="flex gap-8 overflow-x-auto scrollbar-hide"
-          style={{
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)'
-          }}
         >
           {rows[0].map((assistant) => (
             <div key={assistant.id} className="flex-shrink-0 w-64">
@@ -313,10 +406,6 @@ export default function AssistantCarousel({
         <div 
           ref={secondRowRef}
           className="flex gap-8 overflow-x-auto scrollbar-hide"
-          style={{
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)'
-          }}
         >
           {rows[1].map((assistant) => (
             <div key={assistant.id} className="flex-shrink-0 w-64">

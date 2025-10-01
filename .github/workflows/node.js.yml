@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Clean workspace (force delete)
       run: |
-        rm -rf $GITHUB_WORKSPACE/*  
+        rm -rf $GITHUB_WORKSPACE/.next/cache || true 
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4

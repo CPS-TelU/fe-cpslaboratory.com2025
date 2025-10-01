@@ -40,9 +40,21 @@ jobs:
           echo "NEXT_PUBLIC_API_BLOG=${{ secrets.NEXT_PUBLIC_API_BLOG }}" >> .env
           echo "NEXT_PUBLIC_API_ASSISTANT=${{ secrets.NEXT_PUBLIC_API_ASSISTANT }}" >> .env
 
-      - name: Deploy with PM2
+      - name: Deploy to CPSWEB
         run: |
-          pm2 delete nextjs || true
-          pm2 start npm --name "nextjs" -- start
-          pm2 save
+          # pastikan folder CPSWEB ada
+          sudo mkdir -p /root/CPSWEB
+          
+          # hapus isi lama
+          sudo rm -rf /root/CPSWEB/*
+          
+          # copy hasil build + dependency
+          sudo cp -r .next node_modules package.json .env /root/CPSWEB/
+          
+          # masuk ke folder CPSWEB lalu restart PM2
+          cd /root/CPSWEB
+          sudo pm2 delete nextjs || true
+          sudo pm2 start npm --name "nextjs" -- start
+          sudo pm2 save
+
 

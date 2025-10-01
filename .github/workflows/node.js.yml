@@ -43,18 +43,18 @@ jobs:
       - name: Deploy to CPSWEB
         run: |
           # pastikan folder CPSWEB ada
-          sudo mkdir -p /root/CPSWEB
+          sudo -n mkdir -p /root/CPSWEB
           
           # hapus isi lama
-          sudo rm -rf /root/CPSWEB/*
+          sudo -n rm -rf /root/CPSWEB/*
           
           # copy hasil build + dependency
-          sudo cp -r .next node_modules package.json .env /root/CPSWEB/
+          sudo -n cp -r .next node_modules package.json .env /root/CPSWEB/
           
           # masuk ke folder CPSWEB lalu restart PM2
           cd /root/CPSWEB
-          sudo pm2 delete nextjs || true
-          sudo pm2 start npm --name "nextjs" -- start
-          sudo pm2 save
+          sudo -n pm2 delete nextjs || true
+          sudo -n pm2 start npm --name "nextjs" -- start
+          sudo -n pm2 save
 
 

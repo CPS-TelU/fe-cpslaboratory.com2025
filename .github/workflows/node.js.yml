@@ -40,3 +40,9 @@ jobs:
           echo "NEXT_PUBLIC_API_BLOG=${{ secrets.NEXT_PUBLIC_API_BLOG }}" >> .env
           echo "NEXT_PUBLIC_API_ASSISTANT=${{ secrets.NEXT_PUBLIC_API_ASSISTANT }}" >> .env
 
+      - name: Deploy with PM2
+        run: |
+          pm2 delete nextjs || true
+          pm2 start npm --name "nextjs" -- start
+          pm2 save
+

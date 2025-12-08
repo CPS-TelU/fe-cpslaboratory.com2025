@@ -38,8 +38,6 @@ export default function FormPracticum({title} : props){
         document:"",
         year:""
     });
-    const api = process.env.NEXT_PUBLIC_API_REGISTER
-    console.log("API BE", api)
     const [loading, setLoading] = useState(false)
 
     const handleChange = (
@@ -67,7 +65,7 @@ export default function FormPracticum({title} : props){
         e.preventDefault()
         try {
             setLoading(true)
-            const res = await fetch(`${api}/practicum/register`,{
+            const res = await fetch(`https://dev-recruitment-xi.vercel.app/practicum/register`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

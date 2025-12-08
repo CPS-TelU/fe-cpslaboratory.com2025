@@ -24,7 +24,7 @@ interface props{
     title : string
 }
 
-const api = process.env.NEXT_PUBLIC_API_REGISTER
+
 
 export default function FormResearch({title} : props){
     const [formData, setFormData] = useState<Register>({
@@ -66,7 +66,7 @@ export default function FormResearch({title} : props){
         e.preventDefault()
         try {
             setLoading(true)
-            const res = await fetch(`${api}/research/register`,{
+            const res = await fetch(`https://dev-recruitment-xi.vercel.app/research/register`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"

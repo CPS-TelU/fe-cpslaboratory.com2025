@@ -83,7 +83,7 @@ export default function AboutHero() {
               Kami merupakan salah satu lab di Fakultas Teknik Elektro Telkom University, di bawah kelompok keahlian Jaringan dan Multimedia (ICONS).
             </p>
             <h3 className="mt-8 text-2xl font-bold text-gray-900">Divisi</h3>
-            <div className="mt-4 flex flex-col sm:flex-row gap-4 text-justify">
+            <div className="mt-4 flex flex-col sm:flex-row gap-4 start">
               <FactCard title="Praktikum" text="Praktikum kami merupakan praktikum telekomunikasi tingkat pertama, yaitu Jaringan Trafik dan Telekomunikasi yang berfokus pada Jaringan Telekomunikasi dan Sistem Antrian" /> 
               <FactCard title="Riset" text="Riset kami berfokus pada pengembangan dan pengimplementasioan di bidang Network, IoT, Software dev, dan Machine Learning." />
             </div>
@@ -94,9 +94,6 @@ export default function AboutHero() {
           </div>
         </div>
       </section>
-      
-      {/* Scroll Indicator
-      <ScrollIndicator /> */}
     </div>
   );
 }

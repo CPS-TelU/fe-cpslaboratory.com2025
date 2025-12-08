@@ -94,4 +94,17 @@ class ApiClient {
   }
 }
 
+export interface Register{
+  name:string
+  nim:string
+  className:string
+  noHp:string
+  gender:string
+  email:string
+  major:string
+  faculty:string
+  document:string
+  year:string
+}
+
 export const apiClient = new ApiClient(API_BASE_URL);

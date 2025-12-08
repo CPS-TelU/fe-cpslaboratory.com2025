@@ -135,7 +135,7 @@ export default function DetailBlog() {
      <section className="min-h-screen">
        <div className="text-center p-6 px-24">
          <h1 className="text-transparent bg-clip-text 
-               bg-gradient-to-r from-black via-[#ba2025] to-black
+               bg-[#ba2025] to-black
                text-4xl md:text-6xl font-bold mb-12 leading-relaxed">
   Our Blog
 </h1>

@@ -262,3 +262,14 @@
   background-color: #e5e7eb;
   margin: 2rem 0;
 }
+
+.text-stroke{
+  color: transparent;
+  -webkit-text-stroke: 2px white
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #BA2025 40%, #FFDCDC 110%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

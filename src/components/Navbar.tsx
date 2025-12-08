@@ -88,7 +88,7 @@ const Header = () => {
             >
               Blog
             </Link>
-            {/* <div className="relative" ref={dropdownRef}>
+            <div className="relative" ref={dropdownRef}>
               <span
                 className={`font-medium cursor-pointer ${
                   pathname.startsWith("/activity")
@@ -119,8 +119,8 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-            </div> */}
-            {/* <Link
+            </div>
+            <Link
               href="/recruitment"
               onClick={(e) => handleNavigationClick("/recruitment", e)}
               className={`font-medium ${
@@ -130,7 +130,7 @@ const Header = () => {
               }`}
             >
               Recruitment
-            </Link> */}
+            </Link>
           </div>
         </div>
         <div className="ml-auto flex space-x-8 items-center">

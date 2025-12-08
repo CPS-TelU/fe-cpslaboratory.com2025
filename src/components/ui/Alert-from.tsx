@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "./card";
 
 export default function AlertContent(){
     return(
-    <Card className="mb-4 border-red-300 bg-red-50 max-w-full w-full md:max-w-lg md:translate-x-20">
+    <Card className="mb-4 border-red-300 bg-red-50 max-w-full w-full md:max-w-lg xl:translate-x-20">
             <CardHeader>
                 <CardTitle className="text-lg font-semibold text-red-700">
                 Perhatian !!

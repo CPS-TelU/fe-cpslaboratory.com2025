@@ -88,6 +88,11 @@ export default function FormResearch({title} : props){
             const result = await res.json();
             if(res.ok){
                 alert("Terimakasih telah mendaftar")
+            }else if (res.status === 400) {
+            
+            alert(result.message || "Data yang dikirim tidak valid (400)");
+            } else {
+                alert(result.message || `Terjadi kesalahan: ${res.status}`);
             }
             console.log("result: ", result)
         } catch (error) {

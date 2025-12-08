@@ -86,8 +86,13 @@ export default function FormPracticum({title} : props){
             })
             setLoading(false)
             const result = await res.json();
-            if(res.ok){
+               if(res.ok){
                 alert("Terimakasih telah mendaftar")
+            }else if (res.status === 400) {
+            
+            alert(result.message || "Data yang dikirim tidak valid (400)");
+            } else {
+                alert(result.message || `Terjadi kesalahan: ${res.status}`);
             }
         } catch (error) {
             console.error("message error", error)

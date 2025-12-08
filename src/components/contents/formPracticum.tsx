@@ -60,6 +60,7 @@ export default function FormPracticum({title} : props){
         });
         }
     };
+    console.log("API BE", api)
 
 
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {

@@ -40,7 +40,7 @@ export default function FormResearch({title} : props){
         year:""
     });
     const [loading, setLoading] = useState(false)
-
+    const api = process.env.NEXT_PUBLIC_API_REGISTER || ""
     const handleChange = (
         e: React.ChangeEvent<
         HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -66,7 +66,7 @@ export default function FormResearch({title} : props){
         e.preventDefault()
         try {
             setLoading(true)
-            const res = await fetch(`https://dev-recruitment-xi.vercel.app/research/register`,{
+            const res = await fetch(`${api}/research/register`,{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
@@ -95,6 +95,7 @@ export default function FormResearch({title} : props){
                 alert(result.message || `Terjadi kesalahan: ${res.status}`);
             }
             console.log("result: ", result)
+             console.log("api", api)
         } catch (error) {
             console.error("message error", error)
             alert("An error occurred while submitting the form. Please try again.");

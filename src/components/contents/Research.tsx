@@ -24,7 +24,7 @@ const Research = () => {
           {/* Tombol */}
           <div className="flex flex-wrap justify-center sm:justify-end space-x-2">
             <Button
-              onClick={() => router.push("/recruitment/form/research")}
+              onClick={() => router.push("/form/research")}
               className="rounded-full px-4 py-2 text-sm md:text-base bg-[#BA2025] text-white hover:bg-red-600 transition duration-300"
             >
               Apply Now <span className="ml-1">&rarr;</span>

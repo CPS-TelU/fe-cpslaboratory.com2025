@@ -24,7 +24,6 @@ interface props{
     title : string
 }
 
-const api = process.env.NEXT_PUBLIC_API_REGISTER
 
 export default function FormPracticum({title} : props){
     const [formData, setFormData] = useState<Register>({
@@ -39,6 +38,8 @@ export default function FormPracticum({title} : props){
         document:"",
         year:""
     });
+    const api = process.env.NEXT_PUBLIC_API_REGISTER
+    console.log("API BE", api)
     const [loading, setLoading] = useState(false)
 
     const handleChange = (
@@ -60,7 +61,6 @@ export default function FormPracticum({title} : props){
         });
         }
     };
-    console.log("API BE", api)
 
 
     const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {

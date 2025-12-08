@@ -27,7 +27,7 @@ const Practicum = () => {
           {/* Tombol */}
           <div className="flex flex-wrap mt-4 sm:mt-0 mb-6 space-x-2">
             <Button
-              onClick={() => router.push("/form/practicum")}
+              onClick={() => router.push("/recruitment/form/practicum")}
               className="relative rounded-full px-4 py-2 md:px-5 md:py-2.5 bg-[#BA2025] text-white hover:bg-red-700 transition-all duration-300"
             >
               Apply Now <span className="ml-1">&rarr;</span>

@@ -1,4 +1,11 @@
-"use client"
+"use client";
+
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formSchema, FormSchemaType } from "@/lib/schemas";
+import StatusOverlay from "@/components/ui/StatusOverlay";
+
 import {
   Card,
   CardHeader,
@@ -16,183 +23,230 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import React, { useState } from "react";
-import { Register } from "@/lib/api";
 
-
-interface props{
-    title : string
+interface props {
+  title: string;
 }
 
+export default function FormResearch({ title }: props) {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
 
+  const api = process.env.NEXT_PUBLIC_API_REGISTER || "";
 
-export default function FormResearch({title} : props){
-    const [formData, setFormData] = useState<Register>({
-        name:"",
-        nim:"",
-        className:"",
-        noHp:"",
-        gender:"",
-        email:"",
-        major:"",
-        faculty:"",
-        document:"",
-        year:""
-    });
-    const [loading, setLoading] = useState(false)
-    const api = process.env.NEXT_PUBLIC_API_REGISTER || ""
-    const handleChange = (
-        e: React.ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-        >
-    ) => {
-        const target = e.target;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    trigger,
+    reset,
+    formState: { errors },
+  } = useForm<FormSchemaType>({
+    resolver: zodResolver(formSchema),
+  });
 
-        if (target instanceof HTMLInputElement && target.type === "checkbox") {
-        setFormData({
-            ...formData,
-            [target.name]: target.checked,
-        });
-        } else {
-        setFormData({
-            ...formData,
-            [target.name]: target.value,
-        });
-        }
-    };
+  const onSubmit = async (data: FormSchemaType) => {
+    setStatus("loading");
 
+    try {
+      const res = await fetch(`${api}/research/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-    const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        try {
-            setLoading(true)
-            const res = await fetch(`${api}/research/register`,{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    name:formData.name,
-                    nim:formData.nim,
-                    className:formData.className,
-                    noHp:formData.noHp,
-                    gender:formData.gender,
-                    email:formData.email,
-                    major:formData.major,
-                    faculty:formData.faculty,
-                    document:formData.document,
-                    year:formData.year
-                }),
-            })
-            setLoading(false)
-            const result = await res.json();
-            if(res.ok){
-                alert("Terimakasih telah mendaftar")
-            }else if (res.status === 400) {
-            
-            alert(result.message || "Data yang dikirim tidak valid (400)");
-            } else {
-                alert(result.message || `Terjadi kesalahan: ${res.status}`);
-            }
-            console.log("result: ", result)
-             console.log("api", api)
-        } catch (error) {
-            console.error("message error", error)
-            alert("An error occurred while submitting the form. Please try again.");
-        }finally{
-            setLoading(false)
-        }
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server Error: Respons tidak valid.");
+      }
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setMessage("Pendaftaran Research berhasil dikirim!");
+        setStatus("success");
+        reset();
+      } else {
+        setMessage(result.message || `Gagal: Status ${res.status}`);
+        setStatus("error");
+      }
+    } catch (error: any) {
+      console.error("Error:", error);
+      setMessage(error.message || "Terjadi kesalahan koneksi.");
+      setStatus("error");
     }
+  };
 
-    return(
-    <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto md:w-2/3">
+  const handleCloseOverlay = () => {
+    setStatus("idle");
+    setMessage("");
+  };
 
+  return (
+    <>
+      <StatusOverlay
+        status={status}
+        message={message}
+        onClose={handleCloseOverlay}
+      />
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-lg mx-auto md:w-2/3"
+      >
         <Card>
-                <CardHeader>
-                    <CardTitle className="text-lg font-semibold">Form {title}</CardTitle>
-                </CardHeader>
+          <CardHeader>
+            <CardTitle className="text-lg font-semibold">
+              Form {title}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-1">
+              <Label>Nama</Label>
+              <Input
+                {...register("name")}
+                placeholder="Nama lengkap"
+                className={errors.name && "border-red-500"}
+              />
+              {errors.name && (
+                <p className="text-red-500 text-xs">{errors.name.message}</p>
+              )}
+            </div>
 
-                <CardContent className="space-y-4">
-                    {/* Name */}
-                    <div className="space-y-1">
-                        <Label>Nama</Label>
-                        <Input name="name" placeholder="Nama lengkap" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1">
+              <Label>NIM</Label>
+              <Input
+                {...register("nim")}
+                placeholder="Masukkan NIM"
+                className={errors.nim && "border-red-500"}
+              />
+              {errors.nim && (
+                <p className="text-red-500 text-xs">{errors.nim.message}</p>
+              )}
+            </div>
 
-                    {/* NIM */}
-                    <div className="space-y-1">
-                        <Label>NIM</Label>
-                        <Input name="nim" placeholder="Masukkan NIM" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1">
+              <Label>Kelas</Label>
+              <Input
+                {...register("className")}
+                placeholder="Contoh: TT-47-06"
+                className={errors.className && "border-red-500"}
+              />
+              {errors.className && (
+                <p className="text-red-500 text-xs">
+                  {errors.className.message}
+                </p>
+              )}
+            </div>
 
-                    {/* Class Name */}
-                    <div className="space-y-1">
-                        <Label>Kelas</Label>
-                        <Input name="className" placeholder="Masukkan kelas" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1">
+              <Label>No HP</Label>
+              <Input
+                {...register("noHp")}
+                placeholder="08xxxxxxxxxx"
+                className={errors.noHp && "border-red-500"}
+              />
+              {errors.noHp && (
+                <p className="text-red-500 text-xs">{errors.noHp.message}</p>
+              )}
+            </div>
 
-                    {/* No HP */}
-                    <div className="space-y-1">
-                        <Label>No HP</Label>
-                        <Input name="noHp" placeholder="08xxxxxxxxxx" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1 w-full">
+              <Label>Gender</Label>
+              <Select
+                onValueChange={(val) => {
+                  setValue("gender", val as any);
+                  trigger("gender");
+                }}
+              >
+                <SelectTrigger className={errors.gender && "border-red-500"}>
+                  <SelectValue placeholder="Pilih jenis kelamin" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.gender && (
+                <p className="text-red-500 text-xs">{errors.gender.message}</p>
+              )}
+            </div>
 
-                    {/* Gender */}
-                    <div className="space-y-1 w-full">
-                    <Label>Gender</Label>
-                    <Select name="gender" onValueChange={(value) => setFormData((prev) => ({...prev, gender:value}))}>
-                        <SelectTrigger>
-                        <SelectValue placeholder="Pilih jenis kelamin" />
-                        </SelectTrigger>
-                        <SelectContent>
-                        <SelectItem value="male">Male</SelectItem>
-                        <SelectItem value="female">Female</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    </div>
+            <div className="space-y-1">
+              <Label>Email</Label>
+              <Input
+                type="email"
+                {...register("email")}
+                placeholder="email@example.com"
+                className={errors.email && "border-red-500"}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-xs">{errors.email.message}</p>
+              )}
+            </div>
 
-                    {/* Email */}
-                    <div className="space-y-1">
-                        <Label>Email</Label>
-                        <Input name="email" type="email" placeholder="email@example.com" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1">
+              <Label>Program Studi</Label>
+              <Input
+                {...register("major")}
+                placeholder="Masukkan program studi"
+                className={errors.major && "border-red-500"}
+              />
+              {errors.major && (
+                <p className="text-red-500 text-xs">{errors.major.message}</p>
+              )}
+            </div>
 
-                    {/* Major */}
-                    <div className="space-y-1">
-                        <Label>Program Studi</Label>
-                        <Input name="major" placeholder="Masukkan program studi" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1">
+              <Label>Fakultas</Label>
+              <Input
+                {...register("faculty")}
+                placeholder="Masukkan fakultas"
+                className={errors.faculty && "border-red-500"}
+              />
+              {errors.faculty && (
+                <p className="text-red-500 text-xs">{errors.faculty.message}</p>
+              )}
+            </div>
 
-                    {/* Faculty */}
-                    <div className="space-y-1">
-                        <Label>Fakultas</Label>
-                        <Input name="faculty" placeholder="Masukkan fakultas" onChange={handleChange} required />
-                    </div>
+            <div className="space-y-1">
+              <Label>Link Dokumen</Label>
+              <Input
+                {...register("document")}
+                placeholder="https://..."
+                className={errors.document && "border-red-500"}
+              />
+              {errors.document && (
+                <p className="text-red-500 text-xs">
+                  {errors.document.message}
+                </p>
+              )}
+            </div>
 
-                    {/* Document (link) */}
-                    <div className="space-y-1">
-                    <Label>Link Dokumen</Label>
-                    <Input
-                        name="document"
-                        placeholder="Masukkan link Google Drive"
-                        required
-                        onChange={handleChange}
-                    />
-                    </div>
-
-                    {/* Year */}
-                    <div className="space-y-1">
-                    <Label>Tahun Angkatan</Label>
-                    <Input name="year" placeholder="2024 / 2025" onChange={handleChange} required />
-                    </div>
-                </CardContent>
-
-            <CardFooter>
-                <Button type="submit" className="w-full bg-[#ba2025] hover:bg-red-400"  disabled={loading}>
-                    {loading ? "Loading...." : "apply"}
-                </Button>
-            </CardFooter>
+            <div className="space-y-1">
+              <Label>Tahun Angkatan</Label>
+              <Input
+                {...register("year")}
+                placeholder="2024 / 2025"
+                className={errors.year && "border-red-500"}
+              />
+              {errors.year && (
+                <p className="text-red-500 text-xs">{errors.year.message}</p>
+              )}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button
+              type="submit"
+              className="w-full bg-[#ba2025] hover:bg-red-400"
+            >
+              Apply
+            </Button>
+          </CardFooter>
         </Card>
-    </form>
-    )
+      </form>
+    </>
+  );
 }

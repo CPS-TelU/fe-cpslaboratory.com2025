@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { METADATA } from "@/components/constants/Metadata";
-import "./globals.css"
-
-
-
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +19,7 @@ export const metadata: Metadata = {
     },
   ],
   openGraph: {
-    type: 'website', // Tipe diperbaiki menjadi 'website'
+    type: "website",
     locale: METADATA.openGraph.locale,
     url: METADATA.openGraph.url,
     title: METADATA.openGraph.title,
@@ -30,7 +27,7 @@ export const metadata: Metadata = {
     siteName: METADATA.openGraph.siteName,
   },
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: METADATA.twitter.title,
     description: METADATA.twitter.description,
   },
@@ -57,9 +54,12 @@ export default function RootLayout({
         <link rel="canonical" href={METADATA.canonical} />
         <meta name="robots" content="index, follow" />
       </head>
+
       <body suppressHydrationWarning={true}>
         <Header />
+
         {children}
+
         <Footer />
       </body>
     </html>

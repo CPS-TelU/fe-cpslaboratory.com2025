@@ -51,14 +51,31 @@ export default function FormPracticum({ title }: props) {
     setStatus("loading");
 
     try {
+      // MAPPING MANUAL DATA
       const res = await fetch(`${api}/practicum/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          nim: data.nim,
+          className: data.className,
+          noHp: data.noHp,
+          gender: data.gender,
+          email: data.email,
+          major: data.major,
+          faculty: data.faculty,
+          document: data.document,
+          year: data.year,
+        }),
       });
 
+      // Cek apakah response valid (JSON)
       const contentType = res.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
+        const textError = await res.json();
+        console.error("Response bukan JSON:", textError);
         throw new Error("Server Error: Respons tidak valid.");
       }
 
@@ -68,12 +85,12 @@ export default function FormPracticum({ title }: props) {
         setMessage("Pendaftaran Praktikum berhasil dikirim!");
         setStatus("success");
         reset();
-      } else {
+      } else if (res.status === 400) {
         setMessage(result.message || `Gagal: Status ${res.status}`);
         setStatus("error");
       }
     } catch (error: any) {
-      console.error("Error:", error);
+      console.error("❌ Error:", error);
       setMessage(error.message || "Terjadi kesalahan koneksi.");
       setStatus("error");
     }
@@ -94,7 +111,7 @@ export default function FormPracticum({ title }: props) {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-lg mx-auto w-full md:w-2/3"
+        className="w-full max-w-lg mx-auto md:w-2/3"
       >
         <Card>
           <CardHeader>
@@ -102,8 +119,8 @@ export default function FormPracticum({ title }: props) {
               Form {title}
             </CardTitle>
           </CardHeader>
-
           <CardContent className="space-y-4">
+            {/* Input Nama */}
             <div className="space-y-1">
               <Label>Nama</Label>
               <Input
@@ -116,6 +133,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input NIM */}
             <div className="space-y-1">
               <Label>NIM</Label>
               <Input
@@ -128,6 +146,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input Kelas */}
             <div className="space-y-1">
               <Label>Kelas</Label>
               <Input
@@ -142,6 +161,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input No HP */}
             <div className="space-y-1">
               <Label>No HP</Label>
               <Input
@@ -154,6 +174,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Select Gender */}
             <div className="space-y-1 w-full">
               <Label>Gender</Label>
               <Select
@@ -175,6 +196,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input Email */}
             <div className="space-y-1">
               <Label>Email</Label>
               <Input
@@ -188,6 +210,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input Prodi */}
             <div className="space-y-1">
               <Label>Program Studi</Label>
               <Input
@@ -200,6 +223,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input Fakultas */}
             <div className="space-y-1">
               <Label>Fakultas</Label>
               <Input
@@ -212,6 +236,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input Link Dokumen */}
             <div className="space-y-1">
               <Label>Link Dokumen</Label>
               <Input
@@ -226,6 +251,7 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
 
+            {/* Input Tahun */}
             <div className="space-y-1">
               <Label>Tahun Angkatan</Label>
               <Input
@@ -238,7 +264,6 @@ export default function FormPracticum({ title }: props) {
               )}
             </div>
           </CardContent>
-
           <CardFooter>
             <Button
               type="submit"

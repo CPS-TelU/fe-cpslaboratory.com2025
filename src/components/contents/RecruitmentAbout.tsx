@@ -64,7 +64,7 @@ export default function RecruitmentAbout() {
           <CardFooter className="pt-4">
             <Button
               className="w-full py-6 text-lg font-medium bg-[#ba2025] hover:bg-red-700 shadow-md hover:shadow-lg transition-all"
-              onClick={() => router.push("/recruitment/research")}
+              onClick={() => router.push("/recruitment/practicum")}
             >
               Check Requirements
             </Button>

@@ -53,16 +53,32 @@ export default function FormResearch({ title }: props) {
     try {
       const res = await fetch(`${api}/research/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          nim: data.nim,
+          className: data.className,
+          noHp: data.noHp,
+          gender: data.gender,
+          email: data.email,
+          major: data.major,
+          faculty: data.faculty,
+          document: data.document,
+          year: data.year,
+        }),
       });
 
       const contentType = res.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
+        const textError = await res.text();
+        console.error("❌ Response bukan JSON:", textError);
         throw new Error("Server Error: Respons tidak valid.");
       }
 
       const result = await res.json();
+      console.log("✅ Result API:", result);
 
       if (res.ok) {
         setMessage("Pendaftaran Research berhasil dikirim!");
@@ -73,7 +89,7 @@ export default function FormResearch({ title }: props) {
         setStatus("error");
       }
     } catch (error: any) {
-      console.error("Error:", error);
+      console.error("❌ Error:", error);
       setMessage(error.message || "Terjadi kesalahan koneksi.");
       setStatus("error");
     }
@@ -103,6 +119,7 @@ export default function FormResearch({ title }: props) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Input Nama */}
             <div className="space-y-1">
               <Label>Nama</Label>
               <Input
@@ -115,6 +132,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input NIM */}
             <div className="space-y-1">
               <Label>NIM</Label>
               <Input
@@ -127,6 +145,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input Kelas */}
             <div className="space-y-1">
               <Label>Kelas</Label>
               <Input
@@ -141,6 +160,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input No HP */}
             <div className="space-y-1">
               <Label>No HP</Label>
               <Input
@@ -153,6 +173,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Select Gender */}
             <div className="space-y-1 w-full">
               <Label>Gender</Label>
               <Select
@@ -174,6 +195,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input Email */}
             <div className="space-y-1">
               <Label>Email</Label>
               <Input
@@ -187,6 +209,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input Prodi */}
             <div className="space-y-1">
               <Label>Program Studi</Label>
               <Input
@@ -199,6 +222,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input Fakultas */}
             <div className="space-y-1">
               <Label>Fakultas</Label>
               <Input
@@ -211,6 +235,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input Link Dokumen */}
             <div className="space-y-1">
               <Label>Link Dokumen</Label>
               <Input
@@ -225,6 +250,7 @@ export default function FormResearch({ title }: props) {
               )}
             </div>
 
+            {/* Input Tahun */}
             <div className="space-y-1">
               <Label>Tahun Angkatan</Label>
               <Input

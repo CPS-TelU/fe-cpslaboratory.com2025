@@ -6,10 +6,6 @@ export default function RecruitmentPage() {
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-slate-900 dark:from-red-500 dark:to-slate-100">
             Cyber Recruitment
           </h1>
-          <p className="text-gray-500 md:text-lg max-w-2xl mx-auto">
-            Bergabunglah bersama kami untuk menciptakan inovasi masa depan di
-            dunia teknologi.
-          </p>
         </div>
 
         <div className="relative w-full max-w-5xl mx-auto mt-8 group">

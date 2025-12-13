@@ -1,10 +1,10 @@
-import Research from "@/components/contents/Research";
+import FullForm from "@/components/contents/FullForm";
 
 
 export default function ReasearchPage(){
     return (
         <main className="relative flex flex-col items-center justify-center px-4 pt-20">
-            <Research/>
+            <FullForm/>
         </main>
     )
 }
